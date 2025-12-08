@@ -3,7 +3,7 @@ import { AuthContext } from "../../providers/AuthProvider"
 import { Link, useNavigate } from "react-router-dom"
 
 function Login() {
-  const { loginWithEmail, loginWithGoogle } = useContext(AuthContext)
+  const { loginWithEmail, loginWithGoogle, saveUserToBackend } = useContext(AuthContext)
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const navigate = useNavigate()
@@ -11,19 +11,33 @@ function Login() {
   const handleSubmit = e => {
     e.preventDefault()
     loginWithEmail(email, password)
+      .then(res => {
+        return saveUserToBackend({
+          email,
+          name: res.user.displayName,
+        })
+      })
       .then(() => {
         navigate("/")
       })
       .catch(err => console.error(err))
   }
 
+
   const handleGoogle = () => {
     loginWithGoogle()
+      .then(res => {
+        return saveUserToBackend({
+          email: res.user.email,
+          name: res.user.displayName,
+        })
+      })
       .then(() => {
         navigate("/")
       })
       .catch(err => console.error(err))
   }
+
 
   return (
     <div className="flex justify-center items-center min-h-screen p-4">

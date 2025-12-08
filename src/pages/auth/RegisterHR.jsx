@@ -3,7 +3,7 @@ import { AuthContext } from "../../providers/AuthProvider"
 import { useNavigate } from "react-router-dom"
 
 function RegisterHR() {
-  const { registerWithEmail, updateUserProfile } = useContext(AuthContext)
+  const { registerWithEmail, updateUserProfile, saveUserToBackend } = useContext(AuthContext)
   const [name, setName] = useState("")
   const [companyName, setCompanyName] = useState("")
   const [companyLogo, setCompanyLogo] = useState("")
@@ -16,12 +16,25 @@ function RegisterHR() {
     e.preventDefault()
 
     registerWithEmail(email, password)
+      .then(res => {
+        return updateUserProfile({ displayName: name, photoURL: companyLogo }).then(() => res.user)
+      })
+      .then(firebaseUser => {
+        return saveUserToBackend({
+          name,
+          email,
+          role: "hr",
+          companyName,
+          companyLogo,
+          dateOfBirth: dob,
+        })
+      })
       .then(() => {
-        updateUserProfile({ displayName: name, photoURL: companyLogo })
-        navigate("/login")
+        navigate("/dashboard/hr")
       })
       .catch(err => console.error(err))
   }
+
 
   return (
     <div className="flex justify-center items-center min-h-screen p-4">

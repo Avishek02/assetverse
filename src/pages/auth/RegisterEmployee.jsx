@@ -3,7 +3,7 @@ import { AuthContext } from "../../providers/AuthProvider"
 import { useNavigate } from "react-router-dom"
 
 function RegisterEmployee() {
-  const { registerWithEmail, updateUserProfile } = useContext(AuthContext)
+  const { registerWithEmail, updateUserProfile, saveUserToBackend } = useContext(AuthContext)
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -15,11 +15,22 @@ function RegisterEmployee() {
 
     registerWithEmail(email, password)
       .then(res => {
-        updateUserProfile({ displayName: name })
-        navigate("/login")
+        return updateUserProfile({ displayName: name }).then(() => res.user)
+      })
+      .then(firebaseUser => {
+        return saveUserToBackend({
+          name,
+          email,
+          role: "employee",
+          dateOfBirth: dob,
+        })
+      })
+      .then(() => {
+        navigate("/dashboard/employee")
       })
       .catch(err => console.error(err))
   }
+
 
   return (
     <div className="flex justify-center items-center min-h-screen p-4">

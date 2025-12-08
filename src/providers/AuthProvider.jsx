@@ -9,10 +9,22 @@ import {
   updateProfile,
 } from "firebase/auth"
 import { auth } from "../firebase.config"
+import apiClient from "../api/client"
+
 
 export const AuthContext = createContext(null)
 
 const googleProvider = new GoogleAuthProvider()
+
+const saveUserToBackend = async payload => {
+  const res = await apiClient.post("/api/auth/upsert-user", payload)
+  const { token } = res.data
+  if (token) {
+    localStorage.setItem("assetverse-token", token)
+  }
+  return res.data
+}
+
 
 function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
@@ -51,7 +63,17 @@ function AuthProvider({ children }) {
     return () => unsubscribe()
   }, [])
 
-  const value = { user, loading, registerWithEmail, loginWithEmail, loginWithGoogle, updateUserProfile, logout }
+  const value = {
+    user,
+    loading,
+    registerWithEmail,
+    loginWithEmail,
+    loginWithGoogle,
+    updateUserProfile,
+    logout,
+    saveUserToBackend,
+  }
+
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
