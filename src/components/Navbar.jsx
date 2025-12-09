@@ -89,14 +89,10 @@ function Navbar() {
 
         {user && role === "hr" && (
           <div className="dropdown dropdown-end">
-            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-              <div className="w-10 rounded-full">
-                <img src={profileImage} alt="profile" />
-              </div>
-            </div>
+            ...
             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-56">
               <li>
-                <NavLink to="/dashboard/hr/assets">Asset List</NavLink>
+                <NavLink to="/dashboard/hr">Asset List</NavLink>
               </li>
               <li>
                 <NavLink to="/dashboard/hr/add-asset">Add Asset</NavLink>
@@ -108,14 +104,18 @@ function Navbar() {
                 <NavLink to="/dashboard/hr/employees">Employee List</NavLink>
               </li>
               <li>
+                <NavLink to="/dashboard/hr/upgrade">Upgrade Package</NavLink>
+              </li>
+              <li>
                 <NavLink to="/dashboard/hr/profile">Profile</NavLink>
               </li>
               <li>
-                <button>Logout</button>
+                <button onClick={logout}>Logout</button>
               </li>
             </ul>
           </div>
         )}
+
       </div>
     </div>
   )

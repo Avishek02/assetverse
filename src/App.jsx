@@ -5,7 +5,13 @@ import Login from "./pages/auth/Login"
 import RegisterEmployee from "./pages/auth/RegisterEmployee"
 import RegisterHR from "./pages/auth/RegisterHR"
 import EmployeeDashboard from "./pages/dashboard/employee/EmployeeDashboard"
-import HrDashboard from "./pages/dashboard/hr/HrDashboard"
+import HrDashboardLayout from "./layouts/HrDashboardLayout"
+import AssetList from "./pages/dashboard/hr/AssetList"
+import AddAsset from "./pages/dashboard/hr/AddAsset"
+import Requests from "./pages/dashboard/hr/Requests"
+import EmployeeList from "./pages/dashboard/hr/EmployeeList"
+import UpgradePackage from "./pages/dashboard/hr/UpgradePackage"
+import HrProfile from "./pages/dashboard/hr/HrProfile"
 import RoleRoute from "./routes/RoleRoute"
 
 function App() {
@@ -16,6 +22,7 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route path="join/employee" element={<RegisterEmployee />} />
         <Route path="join/hr" element={<RegisterHR />} />
+
         <Route
           path="dashboard/employee"
           element={
@@ -24,15 +31,24 @@ function App() {
             </RoleRoute>
           }
         />
+
         <Route
           path="dashboard/hr"
           element={
             <RoleRoute allowedRole="hr">
-              <HrDashboard />
+              <HrDashboardLayout />
             </RoleRoute>
           }
-        />
+        >
+          <Route index element={<AssetList />} />
+          <Route path="add-asset" element={<AddAsset />} />
+          <Route path="requests" element={<Requests />} />
+          <Route path="employees" element={<EmployeeList />} />
+          <Route path="upgrade" element={<UpgradePackage />} />
+          <Route path="profile" element={<HrProfile />} />
+        </Route>
       </Route>
+
       <Route path="*" element={<div>404</div>} />
     </Routes>
   )
