@@ -6,6 +6,7 @@ import RegisterEmployee from "./pages/auth/RegisterEmployee"
 import RegisterHR from "./pages/auth/RegisterHR"
 import EmployeeDashboard from "./pages/dashboard/employee/EmployeeDashboard"
 import HrDashboard from "./pages/dashboard/hr/HrDashboard"
+import RoleRoute from "./routes/RoleRoute"
 
 function App() {
   return (
@@ -15,8 +16,22 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route path="join/employee" element={<RegisterEmployee />} />
         <Route path="join/hr" element={<RegisterHR />} />
-        <Route path="dashboard/employee" element={<EmployeeDashboard />} />
-        <Route path="dashboard/hr" element={<HrDashboard />} />
+        <Route
+          path="dashboard/employee"
+          element={
+            <RoleRoute allowedRole="employee">
+              <EmployeeDashboard />
+            </RoleRoute>
+          }
+        />
+        <Route
+          path="dashboard/hr"
+          element={
+            <RoleRoute allowedRole="hr">
+              <HrDashboard />
+            </RoleRoute>
+          }
+        />
       </Route>
       <Route path="*" element={<div>404</div>} />
     </Routes>

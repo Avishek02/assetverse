@@ -18,12 +18,16 @@ const googleProvider = new GoogleAuthProvider()
 
 const saveUserToBackend = async payload => {
   const res = await apiClient.post("/api/auth/upsert-user", payload)
-  const { token } = res.data
+  const { token, user: userData } = res.data
   if (token) {
     localStorage.setItem("assetverse-token", token)
   }
+  if (userData?.role) {
+    localStorage.setItem("assetverse-role", userData.role)
+  }
   return res.data
 }
+
 
 
 function AuthProvider({ children }) {
