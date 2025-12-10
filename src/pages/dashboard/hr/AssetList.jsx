@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import apiClient from "../../../api/client"
 import toast from "react-hot-toast"
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts"
+
 
 
 function AssetList() {
@@ -8,6 +10,21 @@ function AssetList() {
   const [page, setPage] = useState(1)
   const [pages, setPages] = useState(1)
   const [search, setSearch] = useState("")
+  const [assetTypeData, setAssetTypeData] = useState([])
+  const [topRequestedData, setTopRequestedData] = useState([])
+
+
+  const pieData = assetTypeData.map(item => ({
+    name: item.type,
+    value: item.count,
+  }))
+
+  const barData = topRequestedData.map(item => ({
+    name: item.assetName,
+    requests: item.requests,
+  }))
+
+
 
   const fetchAssets = () => {
     apiClient
@@ -25,8 +42,21 @@ function AssetList() {
       .catch(err => console.error(err))
   }
 
+  const fetchAnalytics = () => {
+    apiClient
+      .get("/api/analytics/asset-types")
+      .then(res => setAssetTypeData(res.data))
+      .catch(err => console.error(err))
+
+    apiClient
+      .get("/api/analytics/top-requested-assets")
+      .then(res => setTopRequestedData(res.data))
+      .catch(err => console.error(err))
+  }
+
   useEffect(() => {
     fetchAssets()
+    fetchAnalytics()
   }, [page])
 
   const handleSearch = e => {
@@ -34,6 +64,9 @@ function AssetList() {
     setPage(1)
     fetchAssets()
   }
+
+
+
 
   const handleDelete = id => {
     apiClient
@@ -66,6 +99,48 @@ function AssetList() {
           </button>
         </form>
       </div>
+
+      <div className="grid gap-6 lg:grid-cols-2 mb-6">
+        <div className="card bg-base-100 shadow border">
+          <div className="card-body">
+            <h2 className="card-title text-sm mb-2">Returnable vs Non-returnable</h2>
+            <div className="h-64">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie dataKey="value" data={pieData} outerRadius={80} label>
+                    {pieData.map((entry, index) => (
+                      <Cell key={index} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </div>
+
+        <div className="card bg-base-100 shadow border">
+          <div className="card-body">
+            <h2 className="card-title text-sm mb-2">Top 5 most requested assets</h2>
+            <div className="h-64">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={barData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" hide={barData.length === 0} />
+                  <YAxis allowDecimals={false} />
+                  <Tooltip />
+                  <Bar dataKey="requests">
+                    {barData.map((entry, index) => (
+                      <Cell key={index} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </div>
+      </div>
+
 
       <div className="overflow-x-auto">
         <table className="table">
