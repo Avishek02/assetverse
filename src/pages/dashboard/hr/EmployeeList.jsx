@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
 import apiClient from "../../../api/client"
+import toast from "react-hot-toast"
+
 
 function EmployeeList() {
   const [employees, setEmployees] = useState([])
@@ -14,6 +16,22 @@ function EmployeeList() {
   useEffect(() => {
     fetchEmployees()
   }, [])
+
+  const handleRemove = email => {
+    if (!confirm("Remove this employee? All assets will be returned.")) return
+
+    apiClient
+      .delete(`/api/employees/hr/${email}`)
+      .then(() => {
+        toast.success("Employee removed")
+        fetchEmployees()
+      })
+      .catch(err => {
+        console.error(err)
+        toast.error("Failed to remove employee")
+      })
+  }
+
 
   return (
     <div>
@@ -46,11 +64,13 @@ function EmployeeList() {
               <p className="text-sm">
                 Assets: <span className="font-semibold">{item.assetsCount}</span>
               </p>
-              <div className="card-actions justify-end">
-                <button className="btn btn-sm btn-outline btn-disabled">
-                  Remove from team
-                </button>
-              </div>
+              <button
+                className="btn btn-sm btn-error"
+                onClick={() => handleRemove(item.employeeEmail)}
+              >
+                Remove from Team
+              </button>
+
             </div>
           </div>
         ))}
