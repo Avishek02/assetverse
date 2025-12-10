@@ -1,11 +1,13 @@
-
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import apiClient from "../../../api/client"
 import toast from "react-hot-toast"
-
+import { useReactToPrint } from "react-to-print"
 
 function MyAssets() {
   const [assets, setAssets] = useState([])
+  const [search, setSearch] = useState("")
+  const [typeFilter, setTypeFilter] = useState("all")
+  const printRef = useRef(null)
 
   const fetchAssets = () => {
     apiClient
@@ -31,60 +33,104 @@ function MyAssets() {
       })
   }
 
+  const filteredAssets = assets.filter(item => {
+    const matchesName = item.assetName.toLowerCase().includes(search.toLowerCase())
+    const matchesType =
+      typeFilter === "all" ? true : item.assetType === typeFilter
+    return matchesName && matchesType
+  })
 
+  const handlePrint = useReactToPrint({
+    content: () => printRef.current,
+    documentTitle: "AssetVerse - My Assets",
+  })
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-4">My Assets</h1>
+    <div className="space-y-4">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <h1 className="text-2xl font-bold">My Assets</h1>
+        <div className="flex flex-wrap gap-2">
+          <input
+            type="text"
+            className="input input-bordered"
+            placeholder="Search by asset name"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+          />
+          <select
+            className="select select-bordered"
+            value={typeFilter}
+            onChange={e => setTypeFilter(e.target.value)}
+          >
+            <option value="all">All Types</option>
+            <option value="Returnable">Returnable</option>
+            <option value="Non-returnable">Non-returnable</option>
+          </select>
+          <button className="btn btn-outline" onClick={handlePrint}>
+            Print
+          </button>
+        </div>
+      </div>
 
-      <div className="overflow-x-auto">
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Image</th>
-              <th>Asset</th>
-              <th>Company</th>
-              <th>Assigned</th>
-              <th>Status</th>
-              <th>Actions</th>
-
-            </tr>
-          </thead>
-          <tbody>
-            {assets.map(item => (
-              <tr key={item._id}>
-                <td>
-                  <div className="avatar">
-                    <div className="w-12 rounded">
-                      <img src={item.assetImage} />
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  <div className="font-semibold">{item.assetName}</div>
-                  <div className="text-xs">{item.assetType}</div>
-                </td>
-                <td>{item.companyName}</td>
-                <td>{new Date(item.assignmentDate).toLocaleDateString()}</td>
-                <td className="capitalize">{item.status}</td>
-
-                <td>
-                  {item.status.toLowerCase() === "assigned"
-                    && item.assetType === "Returnable" && (
-                      <button className="btn btn-xs btn-outline" onClick={() => handleReturn(item._id)}>
-                        Return
-                      </button>
-                    )}
-                </td>
-              </tr>
-            ))}
-            {assets.length === 0 && (
+      <div ref={printRef}>
+        <div className="overflow-x-auto">
+          <table className="table">
+            <thead>
               <tr>
-                <td colSpan="5" className="text-center">No assigned assets</td>
+                <th>Image</th>
+                <th>Asset</th>
+                <th>Company</th>
+                <th>Assigned</th>
+                <th>Return Date</th>
+                <th>Status</th>
+                <th>Actions</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filteredAssets.map(item => (
+                <tr key={item._id}>
+                  <td>
+                    <div className="avatar">
+                      <div className="w-12 rounded">
+                        <img src={item.assetImage} alt={item.assetName} />
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div className="font-semibold">{item.assetName}</div>
+                    <div className="text-xs">{item.assetType}</div>
+                  </td>
+                  <td>{item.companyName}</td>
+                  <td>{new Date(item.assignmentDate).toLocaleDateString()}</td>
+                  <td>
+                    {item.returnDate
+                      ? new Date(item.returnDate).toLocaleDateString()
+                      : "-"}
+                  </td>
+                  <td className="capitalize">{item.status}</td>
+                  <td>
+                    {item.status === "assigned" &&
+                      item.assetType === "Returnable" && (
+                        <button
+                          className="btn btn-xs btn-outline"
+                          onClick={() => handleReturn(item._id)}
+                        >
+                          Return
+                        </button>
+                      )}
+                  </td>
+                </tr>
+              ))}
+              {filteredAssets.length === 0 && (
+                <tr>
+                  <td colSpan="7" className="text-center">
+                    No assets found
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   )
