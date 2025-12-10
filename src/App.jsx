@@ -16,6 +16,8 @@ import RoleRoute from "./routes/RoleRoute"
 import RequestAsset from "./pages/dashboard/employee/RequestAsset"
 import MyAssets from "./pages/dashboard/employee/MyAssets"
 import MyTeam from "./pages/dashboard/employee/MyTeam"
+import EmployeeProfile from "./pages/dashboard/employee/EmployeeProfile"
+
 
 
 
@@ -39,6 +41,8 @@ function App() {
           <Route path="request-asset" element={<RequestAsset />} />
           <Route path="my-assets" element={<MyAssets />} />
           <Route path="my-team" element={<MyTeam />} />
+          <Route path="profile" element={<EmployeeProfile />} />
+
 
         </Route>
 
