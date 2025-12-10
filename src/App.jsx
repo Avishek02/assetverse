@@ -13,6 +13,8 @@ import EmployeeList from "./pages/dashboard/hr/EmployeeList"
 import UpgradePackage from "./pages/dashboard/hr/UpgradePackage"
 import HrProfile from "./pages/dashboard/hr/HrProfile"
 import RoleRoute from "./routes/RoleRoute"
+import RequestAsset from "./pages/dashboard/employee/RequestAsset"
+
 
 function App() {
   return (
@@ -30,7 +32,10 @@ function App() {
               <EmployeeDashboard />
             </RoleRoute>
           }
-        />
+        >
+          <Route path="request-asset" element={<RequestAsset />} />
+
+        </Route>
 
         <Route
           path="dashboard/hr"
