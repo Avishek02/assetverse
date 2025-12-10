@@ -6,6 +6,7 @@ function Login() {
   const { loginWithEmail, loginWithGoogle, saveUserToBackend } = useContext(AuthContext)
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [showPassword, setShowPassword] = useState(false)
   const navigate = useNavigate()
 
   const handleSubmit = e => {
@@ -23,7 +24,6 @@ function Login() {
       .catch(err => console.error(err))
   }
 
-
   const handleGoogle = () => {
     loginWithGoogle()
       .then(res => {
@@ -37,7 +37,6 @@ function Login() {
       })
       .catch(err => console.error(err))
   }
-
 
   return (
     <div className="flex justify-center items-center min-h-screen p-4">
@@ -55,14 +54,24 @@ function Login() {
               required
             />
 
-            <input
-              type="password"
-              className="input input-bordered w-full"
-              placeholder="Password"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              required
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                className="input input-bordered w-full pr-12"
+                placeholder="Password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                required
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-sm"
+              >
+                {showPassword ? "Hide" : "Show"}
+              </button>
+            </div>
 
             <button type="submit" className="btn btn-primary w-full">
               Login

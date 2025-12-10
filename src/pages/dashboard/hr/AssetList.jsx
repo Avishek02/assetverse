@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
 import apiClient from "../../../api/client"
+import toast from "react-hot-toast"
+
 
 function AssetList() {
   const [assets, setAssets] = useState([])
@@ -37,10 +39,15 @@ function AssetList() {
     apiClient
       .delete(`/api/assets/${id}`)
       .then(() => {
+        toast.success("Asset deleted successfully")
         fetchAssets()
       })
-      .catch(err => console.error(err))
+      .catch(err => {
+        console.error(err)
+        toast.error("Failed to delete asset")
+      })
   }
+
 
   return (
     <div>

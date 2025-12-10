@@ -1,5 +1,7 @@
 import { useState } from "react"
 import apiClient from "../../../api/client"
+import toast from "react-hot-toast"
+
 
 function AddAsset() {
   const [productName, setProductName] = useState("")
@@ -23,10 +25,15 @@ function AddAsset() {
         setProductImage("")
         setProductType("Returnable")
         setProductQuantity(1)
+        toast.success("Asset saved successfully")
       })
-      .catch(err => console.error(err))
+      .catch(err => {
+        console.error(err)
+        toast.error("Failed to save asset")
+      })
       .finally(() => setLoading(false))
   }
+
 
   return (
     <div className="max-w-xl">
