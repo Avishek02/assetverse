@@ -20,6 +20,7 @@ import EmployeeProfile from "./pages/dashboard/employee/EmployeeProfile"
 import PaymentSuccess from "./pages/PaymentSuccess"
 import NotFound from "./pages/NotFound"
 import EmployeeNotices from "./pages/dashboard/employee/EmployeeNotices"
+import ChooseRole from "./pages/auth/ChooseRole"
 
 
 
@@ -31,6 +32,7 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route path="join/employee" element={<RegisterEmployee />} />
         <Route path="join/hr" element={<RegisterHR />} />
+        <Route path="choose-role" element={<ChooseRole />} />
 
         <Route
           path="dashboard/employee"

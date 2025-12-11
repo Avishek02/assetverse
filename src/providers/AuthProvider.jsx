@@ -33,6 +33,21 @@ function AuthProvider({ children }) {
     return res.data
   }
 
+  const checkUserExists = async email => {
+    const res = await apiClient.get("/api/auth/user-exists", {
+      params: { email },
+    })
+    const data = res.data
+    if (data?.token) {
+      localStorage.setItem("assetverse-token", data.token)
+    }
+    if (data?.user?.role) {
+      localStorage.setItem("assetverse-role", data.user.role)
+      setRole(data.user.role)
+    }
+    return data
+  }
+
   const registerWithEmail = (email, password) => {
     setLoading(true)
     return createUserWithEmailAndPassword(auth, email, password)
@@ -55,6 +70,9 @@ function AuthProvider({ children }) {
 
   const logout = () => {
     setLoading(true)
+    localStorage.removeItem("assetverse-token")
+    localStorage.removeItem("assetverse-role")
+    setRole(null)
     return signOut(auth)
   }
 
@@ -84,6 +102,7 @@ function AuthProvider({ children }) {
     updateUserProfile,
     logout,
     saveUserToBackend,
+    checkUserExists,
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

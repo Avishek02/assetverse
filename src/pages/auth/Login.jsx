@@ -24,19 +24,38 @@ function Login() {
       .catch(err => console.error(err))
   }
 
-  const handleGoogle = () => {
-    loginWithGoogle()
-      .then(res => {
-        return saveUserToBackend({
-          email: res.user.email,
-          name: res.user.displayName,
-        })
+ const handleGoogle = async () => {
+    try {
+      const result = await loginWithGoogle()
+      const gUser = result.user
+
+      const data = await checkUserExists(gUser.email)
+
+      if (data.exists) {
+        if (data.user?.role === "hr") {
+          navigate("/dashboard/hr")
+        } else if (data.user?.role === "employee") {
+          navigate("/dashboard/employee/my-assets")
+        } else {
+          navigate("/")
+        }
+        return
+      }
+
+      navigate("/choose-role", {
+        state: {
+          googleUser: {
+            name: gUser.displayName,
+            email: gUser.email,
+            photoURL: gUser.photoURL,
+          },
+        },
       })
-      .then(() => {
-        navigate("/")
-      })
-      .catch(err => console.error(err))
+    } catch (err) {
+      console.error(err)
+    }
   }
+
 
   return (
     <div className="flex justify-center items-center min-h-screen p-4">
