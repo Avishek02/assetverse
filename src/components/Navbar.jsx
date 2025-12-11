@@ -4,9 +4,11 @@ import { AuthContext } from "../providers/AuthProvider"
 
 
 function Navbar() {
-  const { user, logout } = useContext(AuthContext)
-  const role = null
-  const profileImage = user?.photoURL || ""
+  const { user, logout, role } = useContext(AuthContext)
+  const profileImage = user?.photoURL || "https://res.cloudinary.com/dbanni0vy/image/upload/v1765461579/default_profile_shlfo5.jpg"
+
+  console.log("ROLE:", role)
+
 
 
   const publicLinks = (
@@ -89,7 +91,11 @@ function Navbar() {
 
         {user && role === "hr" && (
           <div className="dropdown dropdown-end">
-            ...
+            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+              <div className="w-10 rounded-full">
+                <img src={profileImage} alt="profile" />
+              </div>
+            </div>
             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-56">
               <li>
                 <NavLink to="/dashboard/hr">Asset List</NavLink>
@@ -115,6 +121,7 @@ function Navbar() {
             </ul>
           </div>
         )}
+
 
       </div>
     </div>
