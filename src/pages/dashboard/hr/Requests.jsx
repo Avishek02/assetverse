@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react"
 import apiClient from "../../../api/client"
 import toast from "react-hot-toast"
+import { useNavigate } from "react-router-dom"
+
 
 function Requests() {
   const [requests, setRequests] = useState([])
   const [title, setTitle] = useState("")
   const [message, setMessage] = useState("")
   const [priority, setPriority] = useState("low")
+
+  const navigate = useNavigate()
+
 
 
   const fetchRequests = () => {
@@ -29,8 +34,16 @@ function Requests() {
       })
       .catch(err => {
         console.error(err)
+
+        if (err.response?.status === 400) {
+          toast.error("Employee limit reached. Please upgrade package.")
+          navigate("/dashboard/hr/upgrade")
+          return
+        }
+
         toast.error("Failed to approve")
       })
+
   }
 
   const handleReject = id => {
