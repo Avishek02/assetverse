@@ -16,6 +16,9 @@ function AssetList() {
   const [assignAssetId, setAssignAssetId] = useState(null)
   const [assignEmployeeEmail, setAssignEmployeeEmail] = useState("")
 
+  const [overview, setOverview] = useState({ activeAssets: 0, assigned: 0, returnable: 0 })
+
+
 
 
   const pieData = assetTypeData.map(item => ({
@@ -58,9 +61,19 @@ function AssetList() {
       .catch(err => console.error(err))
   }
 
+  const fetchOverview = () => {
+    apiClient
+      .get("/api/analytics/hr/overview")
+      .then(res => setOverview(res.data))
+      .catch(err => console.error(err))
+  }
+
+
   useEffect(() => {
     fetchAssets()
     fetchAnalytics()
+    fetchOverview()
+
   }, [page])
 
 
@@ -124,6 +137,7 @@ function AssetList() {
 
   return (
     <div>
+      {/* search  */}
       <div className="flex items-center justify-between mb-4 gap-4">
         <h1 className="text-2xl font-bold">Asset List</h1>
         <form onSubmit={handleSearch} className="flex gap-2">
@@ -140,6 +154,35 @@ function AssetList() {
         </form>
       </div>
 
+      {/* overview  */}
+      <div className="card bg-base-100 shadow border mb-6">
+        <div className="card-body">
+          <h2 className="text-xl font-semibold">Live asset overview</h2>
+          <p className="text-sm text-base-content/70">
+            See assigned, available, and returnable assets at a glance.
+          </p>
+
+          <div className="grid gap-4 mt-4 md:grid-cols-3">
+            <div className="p-4 rounded-lg bg-base-200 text-center">
+              <div className="text-xs tracking-wide text-base-content/60">ACTIVE ASSETS</div>
+              <div className="text-3xl font-bold">{overview.activeAssets}</div>
+            </div>
+
+            <div className="p-4 rounded-lg bg-base-200 text-center">
+              <div className="text-xs tracking-wide text-base-content/60">ASSIGNED</div>
+              <div className="text-3xl font-bold">{overview.assigned}</div>
+            </div>
+
+            <div className="p-4 rounded-lg bg-base-200 text-center">
+              <div className="text-xs tracking-wide text-base-content/60">RETURNABLE</div>
+              <div className="text-3xl font-bold">{overview.returnable}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      {/* chart  */}
       <div className="grid gap-6 lg:grid-cols-2 mb-6">
         <div className="card bg-base-100 shadow border">
           <div className="card-body">
@@ -181,7 +224,7 @@ function AssetList() {
         </div>
       </div>
 
-
+      {/* table */}
       <div className="overflow-x-auto">
         <table className="table">
           <thead>
