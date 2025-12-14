@@ -2,19 +2,26 @@ import { useEffect, useRef, useState } from "react"
 import apiClient from "../../../api/client"
 import toast from "react-hot-toast"
 import { useReactToPrint } from "react-to-print"
+import Loading from "../../../components/Loading"
+
 
 function MyAssets() {
   const [assets, setAssets] = useState([])
   const [search, setSearch] = useState("")
   const [typeFilter, setTypeFilter] = useState("all")
+  const [loading, setLoading] = useState(true)
+
   const printRef = useRef(null)
 
   const fetchAssets = () => {
+    setLoading(true)
     apiClient
       .get("/api/assigned-assets")
       .then(res => setAssets(res.data))
       .catch(err => console.error(err))
+      .finally(() => setLoading(false))
   }
+
 
   useEffect(() => {
     fetchAssets()
@@ -45,6 +52,7 @@ function MyAssets() {
     documentTitle: "AssetVerse - My Assets",
   })
 
+  if (loading) return <Loading />
   return (
     <div className="space-y-4">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">

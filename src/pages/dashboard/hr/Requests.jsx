@@ -2,6 +2,8 @@ import { useEffect, useState } from "react"
 import apiClient from "../../../api/client"
 import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
+import Loading from "../../../components/Loading"
+
 
 
 function Requests() {
@@ -10,16 +12,22 @@ function Requests() {
   const [message, setMessage] = useState("")
   const [priority, setPriority] = useState("low")
 
+  const [loading, setLoading] = useState(true)
+
+
   const navigate = useNavigate()
 
 
 
   const fetchRequests = () => {
+    setLoading(true)
     apiClient
       .get("/api/requests/hr")
       .then(res => setRequests(res.data))
       .catch(err => console.error(err))
+      .finally(() => setLoading(false))
   }
+
 
   useEffect(() => {
     fetchRequests()
@@ -77,6 +85,7 @@ function Requests() {
   }
 
 
+  if (loading) return <Loading />
   return (
     <div>
       <div className="card bg-base-100 shadow border mb-6">

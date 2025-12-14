@@ -2,6 +2,8 @@ import { useContext, useState, useEffect } from "react"
 import { AuthContext } from "../../../providers/AuthProvider"
 import apiClient from "../../../api/client"
 import toast from "react-hot-toast"
+import Loading from "../../../components/Loading"
+
 
 
 function EmployeeProfile() {
@@ -11,13 +13,18 @@ function EmployeeProfile() {
   const [dob, setDob] = useState("")
 
   const [affiliations, setAffiliations] = useState([])
+  const [loading, setLoading] = useState(true)
+
 
   useEffect(() => {
+    setLoading(true)
     apiClient
       .get("/api/affiliations/me")
       .then(res => setAffiliations(res.data))
       .catch(err => console.error(err))
+      .finally(() => setLoading(false))
   }, [])
+
 
 
 
@@ -40,6 +47,7 @@ function EmployeeProfile() {
       })
   }
 
+  if (loading) return <Loading />
   return (
     <div className="max-w-xl space-y-4">
       <h1 className="text-2xl font-bold">My Profile</h1>

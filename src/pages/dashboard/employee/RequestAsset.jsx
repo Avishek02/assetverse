@@ -1,18 +1,25 @@
 import { useEffect, useState } from "react"
 import apiClient from "../../../api/client"
 import toast from "react-hot-toast"
+import Loading from "../../../components/Loading"
+
 
 function RequestAsset() {
   const [assets, setAssets] = useState([])
   const [selected, setSelected] = useState(null)
   const [note, setNote] = useState("")
+  const [loading, setLoading] = useState(true)
+
 
   const fetchAssets = () => {
+    setLoading(true)
     apiClient
       .get("/api/assets/public")
       .then(res => setAssets(res.data))
       .catch(err => console.error(err))
+      .finally(() => setLoading(false))
   }
+
 
   useEffect(() => {
     fetchAssets()
@@ -38,6 +45,7 @@ function RequestAsset() {
       })
   }
 
+  if (loading) return <Loading />
   return (
     <div>
       <h1 className="text-2xl font-bold mb-4">Request an Asset</h1>

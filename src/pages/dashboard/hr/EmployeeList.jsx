@@ -2,16 +2,25 @@ import { useEffect, useState } from "react"
 import apiClient from "../../../api/client"
 import toast from "react-hot-toast"
 
+import Loading from "../../../components/Loading"
+
+
 
 function EmployeeList() {
   const [employees, setEmployees] = useState([])
 
+  const [loading, setLoading] = useState(true)
+
+
   const fetchEmployees = () => {
+    setLoading(true)
     apiClient
       .get("/api/employees/hr")
       .then(res => setEmployees(res.data))
       .catch(err => console.error(err))
+      .finally(() => setLoading(false))
   }
+
 
   useEffect(() => {
     fetchEmployees()
@@ -32,7 +41,7 @@ function EmployeeList() {
       })
   }
 
-
+  if (loading) return <Loading />
   return (
     <div>
       <h1 className="text-2xl font-bold mb-4">My Employee List</h1>

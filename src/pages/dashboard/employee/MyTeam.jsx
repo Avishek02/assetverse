@@ -1,16 +1,25 @@
 import { useEffect, useState } from "react"
 import apiClient from "../../../api/client"
+import Loading from "../../../components/Loading"
+
 
 function MyTeam() {
   const [teams, setTeams] = useState([])
   const [activeIndex, setActiveIndex] = useState(0)
+  const [loading, setLoading] = useState(true)
+
 
   useEffect(() => {
+    setLoading(true)
     apiClient
       .get("/api/teams")
       .then(res => setTeams(res.data))
       .catch(err => console.error(err))
+      .finally(() => setLoading(false))
   }, [])
+
+  
+  if (loading) return <Loading />
 
   if (!teams.length) {
     return <p>You are not affiliated with any company yet.</p>

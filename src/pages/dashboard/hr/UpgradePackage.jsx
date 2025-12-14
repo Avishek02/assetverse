@@ -1,23 +1,32 @@
 import { useEffect, useState } from "react"
 import apiClient from "../../../api/client"
 import toast from "react-hot-toast"
+import Loading from "../../../components/Loading"
+
 
 function UpgradePackage() {
   const [packages, setPackages] = useState([])
   const [loadingId, setLoadingId] = useState(null)
   const [currentPackage, setCurrentPackage] = useState("")
+  const [loading, setLoading] = useState(true)
+
+
 
   useEffect(() => {
-    apiClient
-      .get("/api/packages")
-      .then(res => setPackages(res.data))
-      .catch(err => console.error(err))
+    setLoading(true)
 
-    apiClient
-      .get("/api/users/me")
-      .then(res => setCurrentPackage(res.data.subscription || ""))
+    Promise.all([
+      apiClient.get("/api/packages"),
+      apiClient.get("/api/users/me"),
+    ])
+      .then(([packagesRes, userRes]) => {
+        setPackages(packagesRes.data)
+        setCurrentPackage(userRes.data.subscription || "")
+      })
       .catch(err => console.error(err))
+      .finally(() => setLoading(false))
   }, [])
+
 
   const handleUpgrade = pkg => {
     setLoadingId(pkg._id)
@@ -43,6 +52,8 @@ function UpgradePackage() {
     ? currentPackage.charAt(0).toUpperCase() + currentPackage.slice(1)
     : "N/A"
 
+
+  if (loading) return <Loading />
   return (
     <div>
       <div className="flex items-center justify-between mb-4">

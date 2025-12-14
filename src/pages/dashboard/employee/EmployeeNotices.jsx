@@ -1,15 +1,24 @@
 import { useEffect, useState } from "react"
 import apiClient from "../../../api/client"
+import Loading from "../../../components/Loading"
+
 
 function EmployeeNotices() {
   const [notices, setNotices] = useState([])
+  const [loading, setLoading] = useState(true)
+
 
   useEffect(() => {
+    setLoading(true)
     apiClient
       .get("/api/notices/employee")
       .then(res => setNotices(res.data))
       .catch(err => console.error(err))
+      .finally(() => setLoading(false))
   }, [])
+
+
+  if (loading) return <Loading />
 
   if (!notices.length) {
     return <p>No notices available for your companies.</p>
@@ -25,13 +34,12 @@ function EmployeeNotices() {
               <div className="flex items-center justify-between gap-2">
                 <h2 className="font-semibold">{item.title}</h2>
                 <span
-                  className={`badge badge-sm ${
-                    item.priority === "high"
-                      ? "badge-error"
-                      : item.priority === "medium"
+                  className={`badge badge-sm ${item.priority === "high"
+                    ? "badge-error"
+                    : item.priority === "medium"
                       ? "badge-warning"
                       : "badge-ghost"
-                  }`}
+                    }`}
                 >
                   {item.priority}
                 </span>
