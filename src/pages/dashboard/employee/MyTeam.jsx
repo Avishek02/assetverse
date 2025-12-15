@@ -20,8 +20,8 @@ function MyTeam() {
 
   if (!teams.length) {
     return (
-      <div className="bg-[#f5f7fb] -m-4 p-4 md:p-6 min-h-screen">
-        <div className="text-sm text-[#6b778c]">
+      <div className="bg-[var(--bg-page)] -m-4 p-4 md:p-6 min-h-screen">
+        <div className="text-sm text-[var(--text-secondary)]">
           You are not affiliated with any company yet.
         </div>
       </div>
@@ -31,11 +31,13 @@ function MyTeam() {
   const activeTeam = teams[activeIndex]
 
   return (
-    <div className="bg-[#f5f7fb] -m-4 p-4 md:p-6 min-h-screen">
+    <div className="bg-[var(--bg-page)] -m-4 p-4 md:p-6 min-h-screen">
       <div className="max-w-6xl space-y-6">
         <div>
-          <div className="text-xs text-[#6b778c]">Employee</div>
-          <h1 className="mt-1 text-xl font-semibold text-[#1f2a44]">My Team</h1>
+          {/* <div className="text-xs text-[var(--text-secondary)]">Employee</div> */}
+          <h1 className="mt-1 text-xl font-semibold text-[var(--text-primary)]">
+            My Team
+          </h1>
         </div>
 
         <div className="flex flex-wrap gap-2">
@@ -45,8 +47,8 @@ function MyTeam() {
               onClick={() => setActiveIndex(index)}
               className={`rounded-lg px-4 py-2 text-sm font-semibold transition ${
                 index === activeIndex
-                  ? "bg-[#0065ff] text-white"
-                  : "bg-white border border-[#e6eaf2] text-[#1f2a44] hover:bg-[#f7faff]"
+                  ? "bg-[var(--primary)] text-white"
+                  : "bg-white border border-[var(--border)] text-[var(--text-primary)] hover:bg-[var(--bg-hover-soft)]"
               }`}
             >
               {team.companyName}
@@ -54,9 +56,9 @@ function MyTeam() {
           ))}
         </div>
 
-        <div className="rounded-xl border border-[#e6eaf2] bg-white p-5">
+        <div className="rounded-xl border border-[var(--border)] bg-white p-5">
           <div className="flex items-center gap-4">
-            <div className="h-14 w-14 overflow-hidden rounded-lg border border-[#e6eaf2] bg-[#fbfcff]">
+            <div className="h-14 w-14 overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--bg-surface-soft)]">
               <img
                 src={activeTeam.companyLogo}
                 alt={activeTeam.companyName}
@@ -64,10 +66,10 @@ function MyTeam() {
               />
             </div>
             <div>
-              <div className="text-lg font-semibold text-[#1f2a44]">
+              <div className="text-lg font-semibold text-[var(--text-primary)]">
                 {activeTeam.companyName}
               </div>
-              <div className="text-sm text-[#6b778c]">
+              <div className="text-sm text-[var(--text-secondary)]">
                 HR: {activeTeam.hrEmail}
               </div>
             </div>
@@ -75,7 +77,7 @@ function MyTeam() {
         </div>
 
         <div>
-          <h2 className="text-lg font-semibold text-[#1f2a44] mb-3">
+          <h2 className="text-lg font-semibold text-[var(--text-primary)] mb-3">
             Colleagues
           </h2>
 
@@ -83,10 +85,10 @@ function MyTeam() {
             {activeTeam.colleagues.map(col => (
               <div
                 key={col.email}
-                className="rounded-xl border border-[#e6eaf2] bg-white p-4"
+                className="rounded-xl border border-[var(--border)] bg-white p-4"
               >
                 <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 overflow-hidden rounded-full border border-[#e6eaf2] bg-[#f1f5f9] flex items-center justify-center text-sm font-semibold text-[#1f2a44]">
+                  <div className="h-10 w-10 overflow-hidden rounded-full border border-[var(--border)] bg-[var(--bg-disabled-soft)] flex items-center justify-center text-sm font-semibold text-[var(--text-primary)]">
                     {col.profileImage ? (
                       <img
                         src={col.profileImage}
@@ -99,17 +101,17 @@ function MyTeam() {
                   </div>
 
                   <div className="min-w-0">
-                    <div className="truncate text-sm font-semibold text-[#1f2a44]">
+                    <div className="truncate text-sm font-semibold text-[var(--text-primary)]">
                       {col.name}
                     </div>
-                    <div className="truncate text-xs text-[#6b778c]">
+                    <div className="truncate text-xs text-[var(--text-secondary)]">
                       {col.email}
                     </div>
                   </div>
                 </div>
 
                 {col.dateOfBirth && (
-                  <div className="mt-2 text-xs text-[#6b778c]">
+                  <div className="mt-2 text-xs text-[var(--text-secondary)]">
                     Birthday:{" "}
                     {new Date(col.dateOfBirth).toLocaleDateString()}
                   </div>
@@ -120,12 +122,12 @@ function MyTeam() {
         </div>
 
         <div>
-          <h2 className="text-lg font-semibold text-[#1f2a44] mb-3">
+          <h2 className="text-lg font-semibold text-[var(--text-primary)] mb-3">
             Upcoming Birthdays
           </h2>
 
           {activeTeam.upcomingBirthdays.length === 0 ? (
-            <div className="text-sm text-[#6b778c]">
+            <div className="text-sm text-[var(--text-secondary)]">
               No upcoming birthdays this month.
             </div>
           ) : (
@@ -133,15 +135,15 @@ function MyTeam() {
               {activeTeam.upcomingBirthdays.map(b => (
                 <div
                   key={b.email}
-                  className="rounded-xl border border-[#e6eaf2] bg-white p-4"
+                  className="rounded-xl border border-[var(--border)] bg-white p-4"
                 >
-                  <div className="text-sm font-semibold text-[#1f2a44]">
+                  <div className="text-sm font-semibold text-[var(--text-primary)]">
                     {b.name}
                   </div>
-                  <div className="mt-1 text-xs text-[#6b778c]">
+                  <div className="mt-1 text-xs text-[var(--text-secondary)]">
                     {b.email}
                   </div>
-                  <div className="mt-1 text-xs text-[#1f2a44]">
+                  <div className="mt-1 text-xs text-[var(--text-primary)]">
                     {new Date(b.dateOfBirth).toLocaleDateString()}
                   </div>
                 </div>

@@ -42,25 +42,29 @@ function EmployeeProfile() {
   if (loading) return <Loading />
 
   return (
-    <div className="bg-[#f5f7fb] -m-4 p-4 md:p-6 min-h-screen">
+    <div className="bg-[var(--bg-page)] -m-4 p-4 md:p-6 min-h-screen">
       <div className="max-w-6xl space-y-6">
         <div>
-          <div className="text-xs text-[#6b778c]">Account</div>
-          <h1 className="mt-1 text-xl font-semibold text-[#1f2a44]">My Profile</h1>
+          {/* <div className="text-xs text-[var(--text-secondary)]">Account</div> */}
+          <h1 className="mt-1 text-xl font-semibold text-[var(--text-primary)]">
+            My Profile
+          </h1>
         </div>
 
         <div className="grid gap-6 lg:grid-cols-[420px_1fr]">
-          <div className="rounded-xl border border-[#e6eaf2] bg-white">
-            <div className="border-b border-[#eef1f6] px-5 py-4">
-              <div className="text-sm font-semibold text-[#1f2a44]">Profile Details</div>
-              <div className="mt-1 text-sm text-[#6b778c]">
+          <div className="rounded-xl border border-[var(--border)] bg-white">
+            <div className="border-b border-[var(--divider)] px-5 py-4">
+              <div className="text-sm font-semibold text-[var(--text-primary)]">
+                Profile Details
+              </div>
+              <div className="mt-1 text-sm text-[var(--text-secondary)]">
                 Update your personal information and profile image.
               </div>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4 p-5">
               <div className="flex items-center gap-4">
-                <div className="h-14 w-14 overflow-hidden rounded-full border border-[#e6eaf2] bg-[#fbfcff]">
+                <div className="h-14 w-14 overflow-hidden rounded-full border border-[var(--border)] bg-[var(--bg-surface-soft)]">
                   <img
                     src={profileImage}
                     alt={name || "Profile"}
@@ -68,20 +72,22 @@ function EmployeeProfile() {
                   />
                 </div>
                 <div className="min-w-0">
-                  <div className="text-sm font-semibold text-[#1f2a44] truncate">
+                  <div className="text-sm font-semibold text-[var(--text-primary)] truncate">
                     {name || "Your Name"}
                   </div>
-                  <div className="text-xs text-[#6b778c] truncate">{user?.email || ""}</div>
+                  <div className="text-xs text-[var(--text-secondary)] truncate">
+                    {user?.email || ""}
+                  </div>
                 </div>
               </div>
 
               <div>
-                <label className="mb-1 block text-xs font-semibold text-[#6b778c]">
+                <label className="mb-1 block text-xs font-semibold text-[var(--text-secondary)]">
                   Full Name
                 </label>
                 <input
                   type="text"
-                  className="w-full rounded-lg border border-[#e6eaf2] px-3 py-2 text-sm outline-none focus:border-[#0065ff]"
+                  className="w-full rounded-lg border border-[var(--border)] px-3 py-2 text-sm outline-none focus:border-[var(--primary)]"
                   value={name}
                   onChange={e => setName(e.target.value)}
                   required
@@ -89,36 +95,36 @@ function EmployeeProfile() {
               </div>
 
               <div>
-                <label className="mb-1 block text-xs font-semibold text-[#6b778c]">
+                <label className="mb-1 block text-xs font-semibold text-[var(--text-secondary)]">
                   Email
                 </label>
                 <input
                   type="email"
-                  className="w-full rounded-lg border border-[#e6eaf2] bg-[#f7faff] px-3 py-2 text-sm text-[#6b778c]"
+                  className="w-full rounded-lg border border-[var(--border)] bg-[var(--bg-hover-soft)] px-3 py-2 text-sm text-[var(--text-secondary)]"
                   value={user?.email || ""}
                   disabled
                 />
               </div>
 
               <div>
-                <label className="mb-1 block text-xs font-semibold text-[#6b778c]">
+                <label className="mb-1 block text-xs font-semibold text-[var(--text-secondary)]">
                   Profile Image URL
                 </label>
                 <input
                   type="text"
-                  className="w-full rounded-lg border border-[#e6eaf2] px-3 py-2 text-sm outline-none focus:border-[#0065ff]"
+                  className="w-full rounded-lg border border-[var(--border)] px-3 py-2 text-sm outline-none focus:border-[var(--primary)]"
                   value={profileImage}
                   onChange={e => setProfileImage(e.target.value)}
                 />
               </div>
 
               <div>
-                <label className="mb-1 block text-xs font-semibold text-[#6b778c]">
+                <label className="mb-1 block text-xs font-semibold text-[var(--text-secondary)]">
                   Date of Birth
                 </label>
                 <input
                   type="date"
-                  className="w-full rounded-lg border border-[#e6eaf2] px-3 py-2 text-sm outline-none focus:border-[#0065ff]"
+                  className="w-full rounded-lg border border-[var(--border)] px-3 py-2 text-sm outline-none focus:border-[var(--primary)]"
                   value={dob}
                   onChange={e => setDob(e.target.value)}
                 />
@@ -127,7 +133,7 @@ function EmployeeProfile() {
               <div className="pt-2 flex justify-end">
                 <button
                   type="submit"
-                  className="rounded-lg bg-[#0065ff] px-5 py-2 text-sm font-semibold text-white hover:bg-[#0052cc]"
+                  className="rounded-lg bg-[var(--primary)] px-5 py-2 text-sm font-semibold text-white hover:bg-[var(--primary-hover-dark)]"
                 >
                   Save Changes
                 </button>
@@ -135,28 +141,30 @@ function EmployeeProfile() {
             </form>
           </div>
 
-          <div className="rounded-xl border border-[#e6eaf2] bg-white">
-            <div className="border-b border-[#eef1f6] px-5 py-4">
-              <div className="text-sm font-semibold text-[#1f2a44]">
+          <div className="rounded-xl border border-[var(--border)] bg-white">
+            <div className="border-b border-[var(--divider)] px-5 py-4">
+              <div className="text-sm font-semibold text-[var(--text-primary)]">
                 Affiliated Companies
               </div>
-              <div className="mt-1 text-sm text-[#6b778c]">
+              <div className="mt-1 text-sm text-[var(--text-secondary)]">
                 Companies where you are currently affiliated.
               </div>
             </div>
 
             <div className="p-5">
               {affiliations.length === 0 ? (
-                <div className="text-sm text-[#6b778c]">No active affiliation</div>
+                <div className="text-sm text-[var(--text-secondary)]">
+                  No active affiliation
+                </div>
               ) : (
                 <div className="space-y-3">
                   {affiliations.map(item => (
                     <div
                       key={item._id}
-                      className="flex flex-col gap-3 rounded-xl border border-[#e6eaf2] bg-white p-4 sm:flex-row sm:items-center sm:justify-between"
+                      className="flex flex-col gap-3 rounded-xl border border-[var(--border)] bg-white p-4 sm:flex-row sm:items-center sm:justify-between"
                     >
                       <div className="flex items-center gap-3 min-w-0">
-                        <div className="h-10 w-10 overflow-hidden rounded-lg border border-[#e6eaf2] bg-[#fbfcff]">
+                        <div className="h-10 w-10 overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--bg-surface-soft)]">
                           <img
                             src={item.companyLogo}
                             alt={item.companyName}
@@ -165,16 +173,16 @@ function EmployeeProfile() {
                         </div>
 
                         <div className="min-w-0">
-                          <div className="truncate text-sm font-semibold text-[#1f2a44]">
+                          <div className="truncate text-sm font-semibold text-[var(--text-primary)]">
                             {item.companyName}
                           </div>
-                          <div className="truncate text-xs text-[#6b778c]">
+                          <div className="truncate text-xs text-[var(--text-secondary)]">
                             HR: {item.hrEmail}
                           </div>
                         </div>
                       </div>
 
-                      <div className="text-xs font-semibold text-[#6b778c]">
+                      <div className="text-xs font-semibold text-[var(--text-secondary)]">
                         {new Date(item.affiliationDate).toLocaleDateString()}
                       </div>
                     </div>

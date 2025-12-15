@@ -3,6 +3,38 @@
 
 
 :root {
-  --brand: #5B5FEF;
+  /* --brand: #5B5FEF; */
+
+  /* Navbar */
+  --primary: #272de0;
   --brand-soft: rgba(91, 95, 239, 0.12);
+
+
+
+  /* Employee dashboard */
+  --bg-page: #f6f7ff;
+  --bg-hover: #f0f1ff;
+  --bg-active: #e9ebff;
+
+  --text-primary: #1b1f5c;
+  --text-secondary: #5c5f9e;
+
+  --border: #e2e4ff;
+  --divider: #eceeff;
+
+
+
+  /* Request Asset  */
+  --primary-hover-dark: #1f25b8;
+  --text-placeholder-soft: #8c90c6;
+
+  --bg-surface-soft: #fcfcff;
+  --bg-disabled-soft: #f1f2ff;
+  --bg-hover-soft: #f7f7ff;
+
+
+
+
+
+
 }

@@ -18,7 +18,7 @@ function Navbar() {
   }, [])
 
   const linkBase =
-    "relative rounded-xl px-4 py-2 text-sm font-medium text-base-content/90 transition-all hover:text-[var(--brand)] hover:bg-[var(--brand-soft)]"
+    "relative rounded-xl px-4 py-2 text-sm font-medium text-base-content/90 transition-all hover:text-[var(--primary)] hover:bg-[var(--brand-soft)]"
 
   const PublicLinks = ({ compact = false }) => (
     <>
@@ -27,7 +27,7 @@ function Navbar() {
           to="/"
           className={() =>
             compact
-              ? "rounded-lg px-3 py-2 text-base-content/90 hover:text-[var(--brand)] hover:bg-[var(--brand-soft)]"
+              ? "rounded-lg px-3 py-2 text-base-content/90 hover:text-[var(--primary)] hover:bg-[var(--brand-soft)]"
               : linkBase
           }
         >
@@ -39,7 +39,7 @@ function Navbar() {
           to="/join/employee"
           className={() =>
             compact
-              ? "rounded-lg px-3 py-2 text-base-content/90 hover:text-[var(--brand)] hover:bg-[var(--brand-soft)]"
+              ? "rounded-lg px-3 py-2 text-base-content/90 hover:text-[var(--primary)] hover:bg-[var(--brand-soft)]"
               : linkBase
           }
         >
@@ -51,7 +51,7 @@ function Navbar() {
           to="/join/hr"
           className={() =>
             compact
-              ? "rounded-lg px-3 py-2 text-base-content/90 hover:text-[var(--brand)] hover:bg-[var(--brand-soft)]"
+              ? "rounded-lg px-3 py-2 text-base-content/90 hover:text-[var(--primary)] hover:bg-[var(--brand-soft)]"
               : linkBase
           }
         >
@@ -116,7 +116,7 @@ function Navbar() {
                     <li>
                       <Link
                         to="/login"
-                        className="rounded-xl px-3 py-2 text-base-content/90 hover:text-[var(--brand)] hover:bg-[var(--brand-soft)]"
+                        className="rounded-xl px-3 py-2 text-base-content/90 hover:text-[var(--primary)] hover:bg-[var(--brand-soft)]"
                       >
                         Login
                       </Link>
@@ -130,7 +130,7 @@ function Navbar() {
                           <NavLink
                             to={it.to}
                             className={() =>
-                              "rounded-xl px-3 py-2 text-base-content/90 hover:text-[var(--brand)] hover:bg-[var(--brand-soft)]"
+                              "rounded-xl px-3 py-2 text-base-content/90 hover:text-[var(--primary)] hover:bg-[var(--brand-soft)]"
                             }
                           >
                             {it.label}
@@ -149,13 +149,14 @@ function Navbar() {
               </div>
 
               <Link to="/" className="group flex items-center gap-2">
-                <span className="grid h-10 w-10 place-items-center rounded-2xl bg-[var(--brand)] text-white shadow-md">
+                <span className="grid h-10 w-10 place-items-center rounded-2xl bg-[var(--primary)] text-white shadow-md">
                   <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
-                    <path d="M12 2l9 5v10l-9 5-9-5V7l9-5z" />
+                    <path d="M12 2l9 5v10l-9 5-9-5V7l9-5zm0 2.3L5 8v8l7 3.7 7-3.7V8l-7-3.7z" />
                   </svg>
                 </span>
                 <span className="text-xl font-bold tracking-tight">AssetVerse</span>
               </Link>
+
             </div>
 
             <div className="navbar-center hidden lg:flex">
@@ -198,7 +199,7 @@ function Navbar() {
                         <NavLink
                           to={it.to}
                           className={() =>
-                            "rounded-xl px-3 py-2 text-base-content/90 hover:text-[var(--brand)] hover:bg-[var(--brand-soft)]"
+                            "rounded-xl px-3 py-2 text-base-content/90 hover:text-[var(--primary)] hover:bg-[var(--brand-soft)]"
                           }
                         >
                           {it.label}

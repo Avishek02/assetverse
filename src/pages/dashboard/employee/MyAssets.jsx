@@ -53,7 +53,7 @@ function MyAssets() {
       <div className="max-w-6xl space-y-5">
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div>
-            <div className="text-xs text-[#6b778c]">Employee</div>
+            {/* <div className="text-xs text-[#6b778c]">Employee</div> */}
             <h1 className="mt-1 text-xl font-semibold text-[#1f2a44]">My Assets</h1>
           </div>
 
@@ -87,7 +87,7 @@ function MyAssets() {
             </div>
 
             <select
-              className="rounded-lg border border-[#e6eaf2] bg-white px-3 py-2 text-sm text-[#1f2a44] outline-none focus:border-[#0065ff]"
+              className="rounded-lg border border-[#e6eaf2] bg-white px-3 py-2 text-sm text-[--primary] outline-none focus:border-[#0065ff]"
               value={typeFilter}
               onChange={e => setTypeFilter(e.target.value)}
             >
