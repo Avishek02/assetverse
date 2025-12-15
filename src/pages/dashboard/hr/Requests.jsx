@@ -4,20 +4,14 @@ import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
 import Loading from "../../../components/Loading"
 
-
-
 function Requests() {
   const [requests, setRequests] = useState([])
   const [title, setTitle] = useState("")
   const [message, setMessage] = useState("")
   const [priority, setPriority] = useState("low")
-
   const [loading, setLoading] = useState(true)
 
-
   const navigate = useNavigate()
-
-
 
   const fetchRequests = () => {
     setLoading(true)
@@ -27,7 +21,6 @@ function Requests() {
       .catch(err => console.error(err))
       .finally(() => setLoading(false))
   }
-
 
   useEffect(() => {
     fetchRequests()
@@ -41,17 +34,13 @@ function Requests() {
         fetchRequests()
       })
       .catch(err => {
-        console.error(err)
-
         if (err.response?.status === 400) {
           toast.error("Employee limit reached. Please upgrade package.")
           navigate("/dashboard/hr/upgrade")
           return
         }
-
         toast.error("Failed to approve")
       })
-
   }
 
   const handleReject = id => {
@@ -61,12 +50,8 @@ function Requests() {
         toast.success("Request rejected")
         fetchRequests()
       })
-      .catch(err => {
-        console.error(err)
-        toast.error("Failed to reject")
-      })
+      .catch(() => toast.error("Failed to reject"))
   }
-
 
   const handleCreateNotice = e => {
     e.preventDefault()
@@ -78,40 +63,42 @@ function Requests() {
         setMessage("")
         setPriority("low")
       })
-      .catch(err => {
-        console.error(err)
-        toast.error("Failed to create notice")
-      })
+      .catch(() => toast.error("Failed to create notice"))
   }
 
-
   if (loading) return <Loading />
+
   return (
-    <div>
-      <div className="card bg-base-100 shadow border mb-6">
-        <div className="card-body space-y-3">
-          <h2 className="card-title text-lg">Create Notice</h2>
-          <form onSubmit={handleCreateNotice} className="grid gap-3 md:grid-cols-[2fr_1fr]">
+    <div className="bg-[#f5f7fb] -m-4 p-4 md:p-6 min-h-[calc(100vh-120px)]">
+      <div className="mx-auto max-w-6xl space-y-6">
+        <div className="rounded-xl border border-[#e6eaf2] bg-white">
+          <div className="border-b border-[#eef1f6] px-5 py-3">
+            <div className="text-sm font-semibold text-[#1f2a44]">Create Notice</div>
+          </div>
+
+          <form onSubmit={handleCreateNotice} className="grid gap-4 p-5 md:grid-cols-[2fr_1fr]">
             <div className="space-y-3">
               <input
                 type="text"
-                className="input input-bordered w-full"
+                className="w-full rounded-lg border border-[#e6eaf2] px-3 py-2 text-sm outline-none focus:border-[#0065ff]"
                 placeholder="Notice title"
                 value={title}
                 onChange={e => setTitle(e.target.value)}
                 required
               />
               <textarea
-                className="textarea textarea-bordered w-full"
+                className="w-full rounded-lg border border-[#e6eaf2] px-3 py-2 text-sm outline-none focus:border-[#0065ff]"
                 placeholder="Message"
+                rows={4}
                 value={message}
                 onChange={e => setMessage(e.target.value)}
                 required
               />
             </div>
+
             <div className="flex flex-col gap-3">
               <select
-                className="select select-bordered w-full"
+                className="w-full rounded-lg border border-[#e6eaf2] px-3 py-2 text-sm outline-none focus:border-[#0065ff]"
                 value={priority}
                 onChange={e => setPriority(e.target.value)}
               >
@@ -119,68 +106,112 @@ function Requests() {
                 <option value="medium">Medium priority</option>
                 <option value="high">High priority</option>
               </select>
-              <button type="submit" className="btn btn-primary w-full mt-auto">
+
+              <button
+                type="submit"
+                className="mt-auto rounded-lg bg-[#0065ff] px-4 py-2 text-sm font-semibold text-white hover:bg-[#0052cc]"
+              >
                 Publish Notice
               </button>
             </div>
           </form>
         </div>
-      </div>
 
+        <div>
+          <div className="mb-3 flex items-center justify-between">
+            <h1 className="text-lg font-semibold text-[#1f2a44]">All Requests</h1>
+            <span className="rounded-full border border-[#e6eaf2] bg-white px-3 py-1 text-xs font-semibold text-[#1f2a44]">
+              {requests.length} Total
+            </span>
+          </div>
 
-      <h1 className="text-2xl font-bold mb-4">All Requests</h1>
+          <div className="overflow-hidden rounded-xl border border-[#e6eaf2] bg-white">
+            <div className="grid grid-cols-12 gap-3 border-b border-[#eef1f6] bg-[#fbfcff] px-4 py-3 text-[12px] font-semibold text-[#6b778c]">
+              <div className="col-span-3">Employee</div>
+              <div className="col-span-3">Asset</div>
+              <div className="col-span-2">Company</div>
+              <div className="col-span-2">Date</div>
+              <div className="col-span-1">Status</div>
+              <div className="col-span-1 text-right">Action</div>
+            </div>
 
-      <div className="overflow-x-auto">
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Employee</th>
-              <th>Asset</th>
-              <th>Company</th>
-              <th>Date</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {requests.map(item => (
-              <tr key={item._id}>
-                <td>
-                  <div>
-                    <div className="font-semibold">{item.requesterName}</div>
-                    <div className="text-xs text-base-content/70">{item.requesterEmail}</div>
+            {requests.length === 0 ? (
+              <div className="px-4 py-10 text-center text-sm text-[#6b778c]">
+                No requests found
+              </div>
+            ) : (
+              <div className="divide-y divide-[#eef1f6]">
+                {requests.map(item => (
+                  <div
+                    key={item._id}
+                    className="grid grid-cols-12 gap-3 px-4 py-3 text-sm hover:bg-[#f7faff]"
+                  >
+                    <div className="col-span-3">
+                      <div className="font-semibold text-[#1f2a44]">
+                        {item.requesterName}
+                      </div>
+                      <div className="text-[12px] text-[#6b778c]">
+                        {item.requesterEmail}
+                      </div>
+                    </div>
+
+                    <div className="col-span-3">
+                      <div className="font-semibold text-[#1f2a44]">
+                        {item.assetName}
+                      </div>
+                      <div className="text-[12px] text-[#6b778c]">
+                        {item.assetType}
+                      </div>
+                    </div>
+
+                    <div className="col-span-2 text-[#1f2a44]">
+                      {item.companyName}
+                    </div>
+
+                    <div className="col-span-2 text-[#1f2a44]">
+                      {new Date(item.requestDate).toLocaleDateString()}
+                    </div>
+
+                    <div className="col-span-1 capitalize">
+                      <span
+                        className={`rounded-md px-2 py-1 text-[11px] font-semibold ${item.requestStatus === "pending"
+                            ? "bg-[#fff4e5] text-[#b26a00]"
+                            : item.requestStatus === "approved"
+                              ? "bg-[#e6f4ea] text-[#1e7e34]"
+                              : item.requestStatus === "returned"
+                                ? "bg-[#eef2ff] text-[#3730a3]"
+                                : "bg-[#fdecea] text-[#c92a2a]"
+                          }`}
+                      >
+                        {item.requestStatus}
+                      </span>
+
+                    </div>
+
+                    <div className="col-span-1 flex justify-end gap-2">
+                      {item.requestStatus === "pending" && (
+                        <>
+                          <button
+                            onClick={() => handleApprove(item._id)}
+                            className="rounded-md bg-[#e6f4ea] px-2.5 py-1 text-xs font-semibold text-[#1e7e34] hover:bg-[#d4edda]"
+                          >
+                            Approve
+                          </button>
+                          <button
+                            onClick={() => handleReject(item._id)}
+                            className="rounded-md bg-[#fdecea] px-2.5 py-1 text-xs font-semibold text-[#c92a2a] hover:bg-[#f8d7da]"
+                          >
+                            Reject
+                          </button>
+                        </>
+                      )}
+                    </div>
                   </div>
-                </td>
-                <td>
-                  <div>{item.assetName}</div>
-                  <div className="text-xs text-base-content/70">{item.assetType}</div>
-                </td>
-                <td>{item.companyName}</td>
-                <td>{new Date(item.requestDate).toLocaleDateString()}</td>
-                <td className="capitalize">{item.requestStatus}</td>
-                <td className="flex gap-2">
-                  {item.requestStatus === "pending" && (
-                    <>
-                      <button className="btn btn-xs btn-success" onClick={() => handleApprove(item._id)}>
-                        Approve
-                      </button>
-                      <button className="btn btn-xs btn-error" onClick={() => handleReject(item._id)}>
-                        Reject
-                      </button>
-                    </>
-                  )}
-                </td>
-              </tr>
-            ))}
-            {requests.length === 0 && (
-              <tr>
-                <td colSpan="6" className="text-center">
-                  No requests found
-                </td>
-              </tr>
+                ))}
+              </div>
             )}
-          </tbody>
-        </table>
+          </div>
+        </div>
       </div>
     </div>
   )

@@ -38,6 +38,19 @@ function AssetList() {
     requests: item.requests,
   }))
 
+  const PIE_COLORS = [
+    "#0065ff",
+    "#22c55e",
+    "#f59e0b",
+    "#8b5cf6",
+    "#ef4444",
+    "#06b6d4",
+    "#64748b",
+    "#ec4899",
+    "#84cc16",
+    "#f97316",
+  ]
+
   const refetchAll = (nextPage = page, nextSearch = search) => {
     setLoading(true)
     return Promise.all([
@@ -86,7 +99,6 @@ function AssetList() {
         refetchAll()
       })
       .catch(err => {
-        console.error(err)
         toast.error(err.response?.data?.message || "Failed to assign")
       })
   }
@@ -105,68 +117,102 @@ function AssetList() {
         toast.success("Asset deleted successfully")
         refetchAll()
       })
-      .catch(err => {
-        console.error(err)
-        toast.error("Failed to delete asset")
-      })
+      .catch(() => toast.error("Failed to delete asset"))
   }
 
   if (loading) return <Loading />
 
   return (
-    <div>
-      <div className="flex items-center justify-between mb-4 gap-4">
-        <h1 className="text-2xl font-bold">Asset List</h1>
-        <form onSubmit={handleSearch} className="flex gap-2">
-          <input
-            type="text"
-            className="input input-bordered"
-            placeholder="Search by name"
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-          />
-          <button type="submit" className="btn btn-outline">
-            Search
-          </button>
-        </form>
-      </div>
+    <div className="bg-[#f5f7fb] -m-4 p-4 md:p-6 min-h-[calc(100vh-120px)]">
+      <div className="mx-auto max-w-6xl space-y-6">
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+          <div>
+            <div className="text-xs text-[#6b778c]">Assets</div>
+            <div className="mt-1 flex items-center gap-3">
+              <h1 className="text-xl md:text-2xl font-semibold text-[#1f2a44]">Asset List</h1>
+              <span className="inline-flex items-center rounded-full border border-[#e6eaf2] bg-white px-2.5 py-1 text-xs font-semibold text-[#1f2a44]">
+                Page {page} of {pages}
+              </span>
+            </div>
+          </div>
 
-      <div className="card bg-base-100 shadow border mb-6">
-        <div className="card-body">
-          <h2 className="text-xl font-semibold">Live asset overview</h2>
-          <p className="text-sm text-base-content/70">
-            See assigned, available, and returnable assets at a glance.
-          </p>
+          <form onSubmit={handleSearch} className="w-full md:w-[460px]">
+            <div className="flex items-center gap-2 rounded-lg border border-[#e6eaf2] bg-white px-3 py-2 focus-within:border-[#0065ff]">
+              <svg
+                className="h-4 w-4 text-[#6b778c]"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M21 21L16.65 16.65"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M10.5 18C14.6421 18 18 14.6421 18 10.5C18 6.35786 14.6421 3 10.5 3C6.35786 3 3 6.35786 3 10.5C3 14.6421 6.35786 18 10.5 18Z"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                />
+              </svg>
 
-          <div className="grid gap-4 mt-4 md:grid-cols-3">
-            <div className="p-4 rounded-lg bg-base-200 text-center">
-              <div className="text-xs tracking-wide text-base-content/60">ACTIVE ASSETS</div>
-              <div className="text-3xl font-bold">{overview.activeAssets}</div>
+              <input
+                type="text"
+                className="w-full bg-transparent text-sm text-[#1f2a44] outline-none placeholder:text-[#9aa5b1]"
+                placeholder="Search by name"
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+              />
+
+              <button
+                type="submit"
+                className="rounded-md bg-[#eef5ff] px-3 py-1.5 text-xs font-semibold text-[#0065ff] hover:bg-[#e3efff]"
+              >
+                Search
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div className="rounded-xl border border-[#e6eaf2] bg-white">
+          <div className="border-b border-[#eef1f6] px-5 py-3">
+            <div className="text-sm font-semibold text-[#1f2a44]">Live asset overview</div>
+            <div className="mt-1 text-sm text-[#6b778c]">
+              See assigned, available, and returnable assets at a glance.
+            </div>
+          </div>
+
+          <div className="grid gap-3 p-5 md:grid-cols-3">
+            <div className="rounded-xl border border-[#dbe7ff] bg-[#eef5ff] p-4">
+              <div className="text-[11px] font-semibold tracking-wide text-[#3358a4]">ACTIVE ASSETS</div>
+              <div className="mt-1 text-3xl font-semibold text-[#1f2a44]">{overview.activeAssets}</div>
             </div>
 
-            <div className="p-4 rounded-lg bg-base-200 text-center">
-              <div className="text-xs tracking-wide text-base-content/60">ASSIGNED</div>
-              <div className="text-3xl font-bold">{overview.assigned}</div>
+            <div className="rounded-xl border border-[#d6f3e1] bg-[#eafaf0] p-4">
+              <div className="text-[11px] font-semibold tracking-wide text-[#1e7e34]">ASSIGNED</div>
+              <div className="mt-1 text-3xl font-semibold text-[#1f2a44]">{overview.assigned}</div>
             </div>
 
-            <div className="p-4 rounded-lg bg-base-200 text-center">
-              <div className="text-xs tracking-wide text-base-content/60">RETURNABLE</div>
-              <div className="text-3xl font-bold">{overview.returnable}</div>
+            <div className="rounded-xl border border-[#ffe7c2] bg-[#fff4e5] p-4">
+              <div className="text-[11px] font-semibold tracking-wide text-[#b26a00]">RETURNABLE</div>
+              <div className="mt-1 text-3xl font-semibold text-[#1f2a44]">{overview.returnable}</div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="grid gap-6 lg:grid-cols-2 mb-6">
-        <div className="card bg-base-100 shadow border">
-          <div className="card-body">
-            <h2 className="card-title text-sm mb-2">Returnable vs Non-returnable</h2>
-            <div className="h-64">
+        <div className="grid gap-6 lg:grid-cols-2">
+          <div className="rounded-xl border border-[#e6eaf2] bg-white">
+            <div className="border-b border-[#eef1f6] px-5 py-3">
+              <div className="text-sm font-semibold text-[#1f2a44]">Returnable vs Non-returnable</div>
+            </div>
+
+            <div className="h-64 p-4">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
-                  <Pie dataKey="value" data={pieData} outerRadius={80} label>
+                  <Pie dataKey="value" data={pieData} outerRadius={85} label>
                     {pieData.map((_, index) => (
-                      <Cell key={index} />
+                      <Cell key={index} fill={PIE_COLORS[index % PIE_COLORS.length]} />
                     ))}
                   </Pie>
                   <Tooltip />
@@ -174,128 +220,171 @@ function AssetList() {
               </ResponsiveContainer>
             </div>
           </div>
-        </div>
 
-        <div className="card bg-base-100 shadow border">
-          <div className="card-body">
-            <h2 className="card-title text-sm mb-2">Top 5 most requested assets</h2>
-            <div className="h-64">
+          <div className="rounded-xl border border-[#e6eaf2] bg-white">
+            <div className="border-b border-[#eef1f6] px-5 py-3">
+              <div className="text-sm font-semibold text-[#1f2a44]">Top 5 most requested assets</div>
+            </div>
+
+            <div className="h-64 p-4">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={barData}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="name" hide={barData.length === 0} />
                   <YAxis allowDecimals={false} />
-                  <Tooltip />
-                  <Bar dataKey="requests">
-                    {barData.map((_, index) => (
-                      <Cell key={index} />
-                    ))}
-                  </Bar>
+                  <Tooltip cursor={{ fill: "#F73D93", opacity: 0.08 }} />
+                  <Bar
+                    dataKey="requests"
+                    fill="#F73D93"
+                    radius={[6, 6, 0, 0]}
+                    activeBar={{ fill: "#E73385" }}
+                  />
                 </BarChart>
+
               </ResponsiveContainer>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="overflow-x-auto">
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Image</th>
-              <th>Name</th>
-              <th>Type</th>
-              <th>Quantity</th>
-              <th>Available</th>
-              <th>Date Added</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {assets.map(item => (
-              <tr key={item._id}>
-                <td>
-                  <div className="avatar">
-                    <div className="w-12 rounded">
-                      <img src={item.productImage} alt={item.productName} />
+        <div className="overflow-hidden rounded-xl border border-[#e6eaf2] bg-white">
+          <div className="grid grid-cols-12 gap-3 border-b border-[#eef1f6] bg-[#fbfcff] px-4 py-3 text-[12px] font-semibold text-[#6b778c]">
+            <div className="col-span-2">Image</div>
+            <div className="col-span-3">Name</div>
+            <div className="col-span-2">Type</div>
+            <div className="col-span-1 text-right">Qty</div>
+            <div className="col-span-1 text-right">Avail</div>
+            <div className="col-span-2">Date Added</div>
+            <div className="col-span-1 text-right">Action</div>
+          </div>
+
+          {assets.length === 0 ? (
+            <div className="px-4 py-10 text-center text-sm text-[#6b778c]">No assets found</div>
+          ) : (
+            <div className="divide-y divide-[#eef1f6]">
+              {assets.map(item => (
+                <div
+                  key={item._id}
+                  className="grid grid-cols-12 gap-3 px-4 py-3 text-sm hover:bg-[#f7faff]"
+                >
+                  <div className="col-span-2">
+                    <div className="h-11 w-11 overflow-hidden rounded-lg border border-[#e6eaf2] bg-white">
+                      <img src={item.productImage} alt={item.productName} className="h-full w-full object-cover" />
                     </div>
                   </div>
-                </td>
-                <td>{item.productName}</td>
-                <td>{item.productType}</td>
-                <td>{item.productQuantity}</td>
-                <td>{item.availableQuantity}</td>
-                <td>{new Date(item.dateAdded).toLocaleDateString()}</td>
-                <td className="flex gap-2">
-                  <button className="btn btn-xs btn-error" onClick={() => handleDelete(item._id)}>
-                    Delete
-                  </button>
-                  <button className="btn btn-xs btn-outline" onClick={() => openAssignModal(item._id)}>
-                    Direct Assign
-                  </button>
-                </td>
-              </tr>
-            ))}
 
-            {assets.length === 0 && (
-              <tr>
-                <td colSpan="7" className="text-center">
-                  No assets found
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+                  <div className="col-span-3 min-w-0">
+                    <div className="truncate font-semibold text-[#1f2a44]">{item.productName}</div>
+                    <div className="mt-1 text-[12px] text-[#6b778c]">ID: {item._id}</div>
+                  </div>
 
-      <div className="flex justify-end items-center gap-2 mt-4">
-        <button className="btn btn-sm" disabled={page <= 1} onClick={() => setPage(p => p - 1)}>
-          Previous
-        </button>
-        <span>
-          Page {page} of {pages}
-        </span>
-        <button className="btn btn-sm" disabled={page >= pages} onClick={() => setPage(p => p + 1)}>
-          Next
-        </button>
-      </div>
+                  <div className="col-span-2 text-[#1f2a44]">{item.productType}</div>
 
-      <dialog id="assign_modal" className="modal">
-        <div className="modal-box">
-          <h3 className="font-bold text-lg mb-3">Direct Assign</h3>
+                  <div className="col-span-1 text-right font-semibold text-[#1f2a44]">
+                    {item.productQuantity}
+                  </div>
 
-          <form onSubmit={handleDirectAssign} className="space-y-3">
-            <select
-              className="select select-bordered w-full"
-              value={assignEmployeeEmail}
-              onChange={e => setAssignEmployeeEmail(e.target.value)}
-              required
-            >
-              <option value="" disabled>
-                Select employee
-              </option>
-              {employees.map(emp => (
-                <option key={emp.employeeEmail} value={emp.employeeEmail}>
-                  {emp.employeeName} - {emp.employeeEmail}
-                </option>
+                  <div className="col-span-1 text-right font-semibold text-[#1f2a44]">
+                    {item.availableQuantity}
+                  </div>
+
+                  <div className="col-span-2 text-[#1f2a44]">
+                    {new Date(item.dateAdded).toLocaleDateString()}
+                  </div>
+
+                  <div className="col-span-1 flex justify-end gap-2">
+                    <button
+                      className="rounded-md bg-[#eef5ff] px-2.5 py-1 text-xs font-semibold text-[#0065ff] hover:bg-[#e3efff]"
+                      onClick={() => openAssignModal(item._id)}
+                    >
+                      Assign
+                    </button>
+                    <button
+                      className="rounded-md bg-[#fdecea] px-2.5 py-1 text-xs font-semibold text-[#c92a2a] hover:bg-[#f8d7da]"
+                      onClick={() => handleDelete(item._id)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
               ))}
-            </select>
+            </div>
+          )}
+        </div>
 
-            <div className="flex gap-2 justify-end">
+        <div className="flex items-center justify-end gap-2">
+          <button
+            className="rounded-lg border border-[#e6eaf2] bg-white px-3 py-2 text-sm font-semibold text-[#1f2a44] disabled:opacity-50"
+            disabled={page <= 1}
+            onClick={() => setPage(p => p - 1)}
+          >
+            Previous
+          </button>
+
+          <span className="rounded-lg border border-[#e6eaf2] bg-white px-3 py-2 text-sm font-semibold text-[#1f2a44]">
+            Page {page} of {pages}
+          </span>
+
+          <button
+            className="rounded-lg border border-[#e6eaf2] bg-white px-3 py-2 text-sm font-semibold text-[#1f2a44] disabled:opacity-50"
+            disabled={page >= pages}
+            onClick={() => setPage(p => p + 1)}
+          >
+            Next
+          </button>
+        </div>
+
+        <dialog id="assign_modal" className="modal">
+          <div className="modal-box bg-white border border-[#e6eaf2] rounded-xl max-w-lg">
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <div className="text-sm font-semibold text-[#1f2a44]">Direct Assign</div>
+                <div className="mt-1 text-sm text-[#6b778c]">Select an employee to assign this asset.</div>
+              </div>
               <button
                 type="button"
-                className="btn btn-ghost"
+                className="rounded-md px-2 py-1 text-sm font-semibold text-[#6b778c] hover:bg-[#f5f7fb]"
                 onClick={() => document.getElementById("assign_modal").close()}
               >
-                Cancel
-              </button>
-              <button type="submit" className="btn btn-primary">
-                Assign
+                ✕
               </button>
             </div>
-          </form>
-        </div>
-      </dialog>
+
+            <form onSubmit={handleDirectAssign} className="mt-4 space-y-3">
+              <select
+                className="w-full rounded-lg border border-[#e6eaf2] px-3 py-2 text-sm outline-none focus:border-[#0065ff]"
+                value={assignEmployeeEmail}
+                onChange={e => setAssignEmployeeEmail(e.target.value)}
+                required
+              >
+                <option value="" disabled>
+                  Select employee
+                </option>
+                {employees.map(emp => (
+                  <option key={emp.employeeEmail} value={emp.employeeEmail}>
+                    {emp.employeeName} - {emp.employeeEmail}
+                  </option>
+                ))}
+              </select>
+
+              <div className="flex justify-end gap-2 pt-2">
+                <button
+                  type="button"
+                  className="rounded-lg border border-[#e6eaf2] bg-white px-4 py-2 text-sm font-semibold text-[#1f2a44] hover:bg-[#f7faff]"
+                  onClick={() => document.getElementById("assign_modal").close()}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="rounded-lg bg-[#0065ff] px-4 py-2 text-sm font-semibold text-white hover:bg-[#0052cc]"
+                >
+                  Assign
+                </button>
+              </div>
+            </form>
+          </div>
+        </dialog>
+      </div>
     </div>
   )
 }
