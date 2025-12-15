@@ -10,11 +10,11 @@ function EmployeeDashboard() {
 
   return (
     <div className="min-h-screen bg-[var(--bg-page)] grid md:grid-cols-[240px_1fr]">
-      <aside className="border-r border-[var(--border)] bg-white">
-        <div className="px-4 py-4 border-b border-[var(--divider)]">
+      <aside className="border-r border-[var(--border)] bg-[var(--bg-page)]">
+        <div className="px-4 py-4 border-[var(--divider)]">
           {/* <div className="text-xs text-[var(--text-secondary)]">Dashboard</div> */}
-          <h2 className="mt-1 text-2xl font-semibold text-[var(--text-primary)]">
-            Employee
+          <h2 className="mt-1 text-2xl font-semibold text-[var(--primary)]">
+            Dashboard
           </h2>
         </div>
 

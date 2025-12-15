@@ -91,13 +91,14 @@ function Navbar() {
       <div
         className={[
           "relative transition-all",
-          scrolled ? "bg-base-100/80 backdrop-blur-md" : "bg-base-100",
+          scrolled ? "bg-gradient-to-r from-[#f5f9ff]/60 via-[#eef4ff]/60 to-[#eafcff]/60 backdrop-blur-md" :
+            "gradient-bg",
         ].join(" ")}
       >
-        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        {/* <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <div className="absolute -top-32 left-1/3 h-72 w-72 rounded-full bg-primary/10 blur-[120px]" />
           <div className="absolute -bottom-32 right-1/4 h-72 w-72 rounded-full bg-secondary/10 blur-[120px]" />
-        </div>
+        </div> */}
 
         <div className="relative mx-auto max-w-7xl px-4 md:px-6">
           <div className="navbar min-h-[72px] px-0">
@@ -109,7 +110,7 @@ function Navbar() {
                   </svg>
                 </div>
 
-                <ul className="menu dropdown-content mt-3 w-64 rounded-2xl bg-base-100/95 p-2 shadow-xl backdrop-blur">
+                <ul className="menu dropdown-content mt-3 w-64 rounded-2xl bg-base-100/90 p-2 shadow-xl ">
                   <PublicLinks compact />
 
                   {!user && (
@@ -154,7 +155,9 @@ function Navbar() {
                     <path d="M12 2l9 5v10l-9 5-9-5V7l9-5zm0 2.3L5 8v8l7 3.7 7-3.7V8l-7-3.7z" />
                   </svg>
                 </span>
-                <span className="text-xl font-bold tracking-tight">AssetVerse</span>
+                <span className="text-2xl font-bold tracking-tight bg-gradient-to-r from-[#0065ff] to-[#00b4ff] bg-clip-text text-transparent">
+                  AssetVerse
+                </span>
               </Link>
 
             </div>
@@ -183,10 +186,10 @@ function Navbar() {
                       </div>
 
                       <div className="hidden md:flex flex-col items-start leading-tight">
-                        <span className="text-sm font-semibold text-base-content">
+                        <span className="text-sm font-semibold text-[var(--primary)]">
                           {user?.displayName || "User"}
                         </span>
-                        <span className="text-xs text-base-content/60">
+                        <span className="text-xs text-[var(--primary)]/80">
                           {role === "hr" ? "HR Manager" : "Employee"}
                         </span>
                       </div>

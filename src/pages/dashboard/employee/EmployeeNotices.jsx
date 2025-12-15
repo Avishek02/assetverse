@@ -31,7 +31,7 @@ function EmployeeNotices() {
     <div className="bg-[var(--bg-page)] -m-4 p-4 md:p-6 min-h-screen">
       <div className="max-w-5xl space-y-5">
         <div>
-          <h1 className="mt-1 text-xl font-semibold text-[var(--text-primary)]">
+          <h1 className="mt-1 text-xl font-semibold text-[var(--primary)]">
             Company Notices
           </h1>
         </div>

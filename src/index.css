@@ -35,7 +35,7 @@
   */
 
 
-    --p: 215 100% 50%;
+  --p: 215 100% 50%;
 
 
   /* Navbar */
@@ -43,7 +43,9 @@
   --brand-soft: rgba(47, 53, 242, 0.12);
 
   /* Employee dashboard */
-  --bg-page: #f5f7fb;
+  /* --bg-page: #f5f7fb; */
+  /* --bg-page: #f8fafc; */
+  --bg-page: #f5f8ff;
   --bg-hover: #f1f5ff;
   --bg-active: #eef5ff;
 
@@ -68,5 +70,16 @@
 
 
 
+  /* --main-bg: #eafcff; */
+  /* --main-bg: #f5f8ff; */
 
+}
+
+
+.gradient-bg {
+  background: linear-gradient(to right,
+      /* #f5f9ff, */
+      #eafcff,
+      #eef4ff,
+      #eafcff);
 }

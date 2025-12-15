@@ -35,7 +35,7 @@ function MyTeam() {
       <div className="max-w-6xl space-y-6">
         <div>
           {/* <div className="text-xs text-[var(--text-secondary)]">Employee</div> */}
-          <h1 className="mt-1 text-xl font-semibold text-[var(--text-primary)]">
+          <h1 className="mt-1 text-xl font-semibold text-[var(--primary)]">
             My Team
           </h1>
         </div>

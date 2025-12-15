@@ -54,7 +54,7 @@ function MyAssets() {
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div>
             {/* <div className="text-xs text-[#6b778c]">Employee</div> */}
-            <h1 className="mt-1 text-xl font-semibold text-[#1f2a44]">My Assets</h1>
+            <h1 className="mt-1 text-xl font-semibold text-[var(--primary)]">My Assets</h1>
           </div>
 
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
@@ -97,7 +97,7 @@ function MyAssets() {
             </select>
 
             <button
-              className="rounded-lg border border-[#e6eaf2] bg-white px-4 py-2 text-sm font-semibold text-[#1f2a44] hover:bg-[#f7faff]"
+              className="rounded-lg border border-[#e6eaf2] bg-white px-4 py-2 text-sm font-semibold text-[var(--primary)] hover:bg-[#f7faff]"
               onClick={handlePrint}
             >
               Print

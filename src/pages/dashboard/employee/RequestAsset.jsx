@@ -60,7 +60,7 @@ function RequestAsset() {
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div>
             {/* <div className="text-xs text-[var(--text-secondary)]">Employee</div> */}
-            <h1 className="mt-1 text-xl font-semibold text-[var(--text-primary)]">
+            <h1 className="mt-1 text-xl font-semibold text-[var(--primary)]">
               Request an Asset
             </h1>
             <div className="mt-1 text-sm text-[var(--text-secondary)]">

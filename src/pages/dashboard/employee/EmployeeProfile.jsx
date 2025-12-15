@@ -46,7 +46,7 @@ function EmployeeProfile() {
       <div className="max-w-6xl space-y-6">
         <div>
           {/* <div className="text-xs text-[var(--text-secondary)]">Account</div> */}
-          <h1 className="mt-1 text-xl font-semibold text-[var(--text-primary)]">
+          <h1 className="mt-1 text-xl font-semibold text-[var(--primary)]">
             My Profile
           </h1>
         </div>

@@ -5,12 +5,13 @@ function Footer() {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="relative overflow-hidden bg-base-100 text-base-content">
-      <div className="pointer-events-none absolute inset-0">
+    <footer className="relative overflow-hidden gradient-bg text-base-content">
+
+      {/* <div className="pointer-events-none absolute inset-0">
         <div className="absolute -top-40 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-primary/10 blur-3xl" />
         <div className="absolute -bottom-48 -left-24 h-[520px] w-[520px] rounded-full bg-secondary/10 blur-3xl" />
         <div className="absolute -bottom-56 -right-24 h-[520px] w-[520px] rounded-full bg-accent/10 blur-3xl" />
-      </div>
+      </div> */}
 
       <div className="relative mx-auto max-w-7xl px-4 py-10 md:px-6">
         <div className="grid gap-10 md:grid-cols-12">
@@ -21,9 +22,10 @@ function Footer() {
                   <path d="M12 2l9 5v10l-9 5-9-5V7l9-5zm0 2.3L5 8v8l7 3.7 7-3.7V8l-7-3.7z" />
                 </svg>
               </span>
-              <span className="text-2xl font-bold tracking-tight ">
+              <span className="text-2xl font-bold tracking-tight bg-gradient-to-r from-[#0065ff] to-[#00b4ff] bg-clip-text text-transparent">
                 AssetVerse
               </span>
+
             </Link>
 
 
