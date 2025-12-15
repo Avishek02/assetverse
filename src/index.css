@@ -5,13 +5,13 @@
 :root {
   /* --brand: #5B5FEF; */
 
-  /* Navbar */
+  /* Navbar 
   --primary: #272de0;
   --brand-soft: rgba(91, 95, 239, 0.12);
 
 
 
-  /* Employee dashboard */
+  /* Employee dashboard 
   --bg-page: #f6f7ff;
   --bg-hover: #f0f1ff;
   --bg-active: #e9ebff;
@@ -24,7 +24,7 @@
 
 
 
-  /* Request Asset  */
+  /* Request Asset  
   --primary-hover-dark: #1f25b8;
   --text-placeholder-soft: #8c90c6;
 
@@ -32,7 +32,39 @@
   --bg-disabled-soft: #f1f2ff;
   --bg-hover-soft: #f7f7ff;
 
+  */
 
+
+    --p: 215 100% 50%;
+
+
+  /* Navbar */
+  --primary: #0065ff;
+  --brand-soft: rgba(47, 53, 242, 0.12);
+
+  /* Employee dashboard */
+  --bg-page: #f5f7fb;
+  --bg-hover: #f1f5ff;
+  --bg-active: #eef5ff;
+
+  --text-primary: #1f2a44;
+  --text-secondary: #6b778c;
+
+  --border: #e6eaf2;
+  --divider: #eef1f6;
+
+  /* Request Asset */
+  --primary-hover-dark: #0052cc;
+  --text-placeholder-soft: #9aa5b1;
+
+  --bg-surface-soft: #fbfcff;
+  --bg-disabled-soft: #f1f5f9;
+  --bg-hover-soft: #f7faff;
+
+
+  --stock-status-01: #6b778c;
+  --stock-status-02: #e6f4ea;
+  --stock-status-03: #1e7e34;
 
 
 

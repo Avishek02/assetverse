@@ -135,8 +135,8 @@ function RequestAsset() {
                         <span
                           className={`shrink-0 rounded-full px-2.5 py-1 text-[12px] leading-4 font-semibold ${
                             disabled
-                              ? "bg-[var(--bg-disabled-soft)] text-[var(--text-secondary)]"
-                              : "bg-[var(--brand-soft)] text-[var(--primary)]"
+                              ? "bg-[var(--bg-disabled-soft)] text-[var(--stock-status-01)]"
+                              : "bg-[var(--stock-status-02)] text-[var(--stock-status-03)]"
                           }`}
                         >
                           {disabled ? "Out" : "Available"}

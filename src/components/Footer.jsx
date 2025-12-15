@@ -16,13 +16,16 @@ function Footer() {
         <div className="grid gap-10 md:grid-cols-12">
           <div className="md:col-span-4">
             <Link to="/" className="inline-flex items-center gap-2">
-              <span className="grid h-10 w-10 place-items-center rounded-2xl bg-primary text-primary-content shadow-sm">
+              <span className="grid h-10 w-10 place-items-center rounded-2xl bg-blue-600 text-white shadow-sm">
                 <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
                   <path d="M12 2l9 5v10l-9 5-9-5V7l9-5zm0 2.3L5 8v8l7 3.7 7-3.7V8l-7-3.7z" />
                 </svg>
               </span>
-              <span className="text-2xl font-bold tracking-tight">AssetVerse</span>
+              <span className="text-2xl font-bold tracking-tight ">
+                AssetVerse
+              </span>
             </Link>
+
 
             <p className="mt-4 max-w-sm text-sm leading-relaxed opacity-80">
               Corporate Asset &amp; HR Management platform for modern teams.
@@ -80,7 +83,7 @@ function Footer() {
                     </svg>
                     <input type="email" className="grow" placeholder="you@company.com" required />
                   </label>
-                  <button className="btn btn-primary rounded-2xl" type="submit">
+                  <button className="btn btn-primary bg-[#0065ff] hover:bg-[#0050cc] border-none rounded-2xl" type="submit">
                     Subscribe
                   </button>
                 </form>
