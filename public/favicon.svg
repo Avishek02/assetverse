@@ -1,3 +1,7 @@
-<svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
-    <path d="M12 2l9 5v10l-9 5-9-5V7l9-5zm0 2.3L5 8v8l7 3.7 7-3.7V8l-7-3.7z" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <circle cx="32" cy="32" r="30" fill="#0B5FFF"/>
+
+  <g fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round">
+    <path d="M32 16l14 8v16l-14 8-14-8V24l14-8z"/>
+  </g>
 </svg>
