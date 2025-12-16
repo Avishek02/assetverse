@@ -228,18 +228,21 @@ function AssetList() {
 
             <div className="h-64 p-4">
               <ResponsiveContainer width="100%" height="100%">
+
                 <BarChart data={barData}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="name" hide={barData.length === 0} />
                   <YAxis allowDecimals={false} />
-                  <Tooltip cursor={{ fill: "#F73D93", opacity: 0.08 }} />
+                  <Tooltip cursor={{ fill: "var(--primary)", opacity: 0.08 }} />
                   <Bar
                     dataKey="requests"
-                    fill="#F73D93"
+                    fill="var(--primary)"
                     radius={[6, 6, 0, 0]}
-                    activeBar={{ fill: "#E73385" }}
+                    activeBar={{ fill: "var(--primary-hover)" }}
                   />
                 </BarChart>
+
+
               </ResponsiveContainer>
             </div>
           </div>
@@ -333,11 +336,10 @@ function AssetList() {
               <button
                 key={page}
                 onClick={() => setCurrentPage(page)}
-                className={`rounded-md px-3 py-1 text-sm font-semibold ${
-                  currentPage === page
+                className={`rounded-md px-3 py-1 text-sm font-semibold ${currentPage === page
                     ? "bg-[#0065ff] text-white"
                     : "border border-[#e6eaf2] text-[#1f2a44]"
-                }`}
+                  }`}
               >
                 {page}
               </button>

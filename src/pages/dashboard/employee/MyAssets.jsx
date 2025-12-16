@@ -48,37 +48,19 @@ function MyAssets() {
 
   if (loading) return <Loading />
 
+  const gridCols = "grid-cols-[1fr_2fr_1.5fr_2fr_1.5fr_1.5fr_1.5fr_1fr]"
+
   return (
     <div className="bg-[#f5f7fb] -m-4 p-4 md:p-6 min-h-screen">
       <div className="max-w-6xl space-y-5">
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-          <div>
-            <h1 className="mt-1 text-xl font-semibold text-[var(--primary)]">My Assets</h1>
-          </div>
+          <h1 className="mt-1 text-xl font-semibold text-[var(--primary)]">My Assets</h1>
 
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-            <div className="flex items-center gap-2 rounded-lg border border-[#e6eaf2] bg-white px-3 py-2 focus-within:border-[#0065ff] w-full sm:w-[300px]">
-              <svg
-                className="h-4 w-4 text-[#6b778c]"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M21 21L16.65 16.65"
-                  stroke="currentColor"
-                  strokeWidth="1.6"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M10.5 18C14.6421 18 18 14.6421 18 10.5C18 6.35786 14.6421 3 10.5 3C6.35786 3 3 6.35786 3 10.5C3 14.6421 6.35786 18 10.5 18Z"
-                  stroke="currentColor"
-                  strokeWidth="1.6"
-                />
-              </svg>
+            <div className="flex items-center gap-2 rounded-lg border border-[#e6eaf2] bg-white px-3 py-2 w-full sm:w-[280px]">
               <input
                 type="text"
-                className="w-full bg-transparent text-sm text-[#1f2a44] outline-none placeholder:text-[#9aa5b1]"
+                className="w-full bg-transparent text-sm text-[#1f2a44] outline-none"
                 placeholder="Search by asset name"
                 value={search}
                 onChange={e => setSearch(e.target.value)}
@@ -86,7 +68,7 @@ function MyAssets() {
             </div>
 
             <select
-              className="rounded-lg border border-[#e6eaf2] bg-white px-3 py-2 text-sm text-[--primary] outline-none focus:border-[#0065ff] w-full sm:w-auto"
+              className="rounded-lg border border-[#e6eaf2] bg-white px-3 py-2 text-sm outline-none"
               value={typeFilter}
               onChange={e => setTypeFilter(e.target.value)}
             >
@@ -96,7 +78,7 @@ function MyAssets() {
             </select>
 
             <button
-              className="rounded-lg border border-[#e6eaf2] bg-white px-4 py-2 text-sm font-semibold text-[var(--primary)] hover:bg-[#f7faff] w-full sm:w-auto"
+              className="rounded-lg border border-[#e6eaf2] bg-white px-4 py-2 text-sm font-semibold hover:bg-[#f7faff]"
               onClick={handlePrint}
             >
               Print
@@ -105,47 +87,82 @@ function MyAssets() {
         </div>
 
         <div className="rounded-xl border border-[#e6eaf2] bg-white" ref={printRef}>
-          <div className="relative overflow-x-auto">
-            <div className="min-w-[900px]">
-              <div className="grid grid-cols-12 gap-3 border-b border-[#eef1f6] bg-[#fbfcff] px-4 py-3 text-[12px] font-semibold text-[#6b778c]">
-                <div className="col-span-2">Image</div>
-                <div className="col-span-3">Asset</div>
-                <div className="col-span-2">Company</div>
-                <div className="col-span-2">Assigned</div>
-                <div className="col-span-2">Return Date</div>
-                <div className="col-span-1">Status</div>
+          <div className="overflow-x-auto">
+            <div className="min-w-[950px]">
+              <div
+                className={`grid ${gridCols} gap-4 border-b border-[#eef1f6] bg-[#fbfcff] px-4 py-3 text-[12px] font-semibold text-[#6b778c]`}
+              >
+                <div>Image</div>
+                <div>Asset</div>
+                <div>Type</div>
+                <div>Company</div>
+                <div>Assigned</div>
+                <div>Return Date</div>
+                <div>Status</div>
+                <div className="text-right">Action</div>
               </div>
 
               <div className="divide-y divide-[#eef1f6]">
-                {filteredAssets.map(item => (
-                  <div key={item._id} className="grid grid-cols-12 gap-3 px-4 py-3 text-sm">
-                    <div className="col-span-2">
-                      <div className="h-11 w-11 overflow-hidden rounded-lg border border-[#e6eaf2]">
-                        <img src={item.assetImage} alt={item.assetName} className="h-full w-full object-cover" />
+                {filteredAssets.map(item => {
+                  const statusValue = (item.status || "").toLowerCase()
+                  const canReturn = item.status === "assigned" && item.assetType === "Returnable"
+
+                  return (
+                    <div key={item._id} className={`grid ${gridCols} gap-4 px-4 py-4 text-sm`}>
+                      <div>
+                        <div className="h-10 w-10 overflow-hidden rounded-lg border border-[#e6eaf2]">
+                          <img
+                            src={item.assetImage}
+                            alt={item.assetName}
+                            className="h-full w-full object-cover"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="truncate font-semibold">{item.assetName}</div>
+                      <div>{item.assetType}</div>
+                      <div>{item.companyName}</div>
+
+                      <div>
+                        {item.assignmentDate ? new Date(item.assignmentDate).toLocaleDateString() : "-"}
+                      </div>
+
+                      <div>
+                        {item.returnDate ? new Date(item.returnDate).toLocaleDateString() : "-"}
+                      </div>
+
+                      <div>
+                        <span
+                          className={`rounded-md px-2 py-1 text-xs font-semibold ${statusValue === "assigned"
+                            ? "bg-[#e6f4ea] text-[#1e7e34]"
+                            : statusValue === "returned"
+                              ? "bg-[#eef2ff] text-[#3730a3]"
+                              : statusValue === "rejected"
+                                ? "bg-[#fdecea] text-[#c92a2a]"
+                                : ""
+                            }`}
+                        >
+                          {item.status}
+                        </span>
+                      </div>
+
+                      <div className="flex justify-end">
+                        {canReturn && (
+                          <button
+                            onClick={() => handleReturn(item._id)}
+                            className="rounded-md bg-[#eef2ff] px-3 py-1 text-xs font-semibold text-[#3730a3] hover:bg-[#e1e7ff]"
+                          >
+                            Return
+                          </button>
+                        )}
                       </div>
                     </div>
-
-                    <div className="col-span-3 truncate font-semibold">{item.assetName}</div>
-                    <div className="col-span-2">{item.companyName}</div>
-                    <div className="col-span-2">
-                      {new Date(item.assignmentDate).toLocaleDateString()}
-                    </div>
-                    <div className="col-span-2">
-                      {item.returnDate ? new Date(item.returnDate).toLocaleDateString() : "-"}
-                    </div>
-
-                    <div className="col-span-1 flex gap-2">
-                      <span className="text-xs font-semibold">{item.status}</span>
-                    </div>
-                  </div>
-                ))}
+                  )
+                })}
               </div>
             </div>
           </div>
         </div>
-
-
-
       </div>
     </div>
   )
