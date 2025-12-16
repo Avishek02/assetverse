@@ -117,7 +117,7 @@ function Navbar() {
                     <li>
                       <Link
                         to="/login"
-                        className="rounded-xl px-3 py-2 text-base-content/90 hover:text-[var(--primary)] hover:bg-[var(--brand-soft)]"
+                        className="rounded-xl px-3 py-2 hover:text-[var(--primary)] hover:bg-[var(--brand-soft)]"
                       >
                         Login
                       </Link>
@@ -170,14 +170,14 @@ function Navbar() {
 
             <div className="navbar-end gap-2">
               {!user && (
-                <Link to="/login" className="btn btn-primary rounded-2xl">
+                <Link to="/login" className="btn btn-primary rounded-2xl bg-[var(--primary)] hover:bg-[var(--primary-hover)] border-none text-white">
                   Login
                 </Link>
               )}
 
               {user && (
                 <div className="dropdown dropdown-end">
-                  <div tabIndex={0} role="button" className="btn btn-ghost rounded-2xl px-2 hover:bg-base-200/50">
+                  <div tabIndex={0} role="button" className="px-5 py-7 btn btn-ghost border-none rounded-3xl hover:bg-[var(--brand-soft)]">
                     <div className="flex items-center gap-3">
                       <div className="avatar">
                         <div className="w-10 rounded-2xl ring-1 ring-base-300">

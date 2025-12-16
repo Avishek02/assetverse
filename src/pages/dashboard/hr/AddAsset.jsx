@@ -35,8 +35,8 @@ function AddAsset() {
       <div className="max-w-xl">
         <div className="rounded-xl border border-[#e6eaf2] bg-white">
           <div className="border-b border-[#eef1f6] px-5 py-4">
-            <div className="text-xs text-[#6b778c]">Assets</div>
-            <h1 className="mt-1 text-lg font-semibold text-[#1f2a44]">Add Asset</h1>
+            {/* <div className="text-xs text-[#6b778c]">Assets</div> */}
+            <h1 className="mt-1 text-lg font-semibold text-[var(--primary)]">Add Asset</h1>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4 p-5">

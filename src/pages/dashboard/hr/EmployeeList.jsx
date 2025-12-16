@@ -8,6 +8,9 @@ function EmployeeList() {
   const [loading, setLoading] = useState(true)
   const [q, setQ] = useState("")
 
+  const DEFAULT_PROFILE =
+    "https://res.cloudinary.com/dbanni0vy/image/upload/v1765461579/default_profile_shlfo5.jpg"
+
   const fetchEmployees = () => {
     setLoading(true)
     apiClient
@@ -54,12 +57,11 @@ function EmployeeList() {
       <div className="mx-auto max-w-6xl space-y-4">
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div>
-            <div className="text-xs text-[#6b778c]">HR / Employees</div>
             <div className="mt-1 flex items-center gap-3">
-              <h1 className="text-xl md:text-2xl font-semibold text-[#1f2a44]">
+              <h1 className="text-xl md:text-2xl font-semibold text-[var(--primary)]">
                 My Employee List
               </h1>
-              <span className="inline-flex items-center rounded-full border border-[#e6eaf2] bg-white px-2.5 py-1 text-xs font-semibold text-[#1f2a44]">
+              <span className="inline-flex items-center rounded-full border border-[#e6eaf2] bg-[var(--bg-active)] px-2.5 py-1 text-xs font-semibold text-[var(--primary)] shadow-[0_1px_0_rgba(16,24,40,0.02)]">
                 {employees.length} Total
               </span>
             </div>
@@ -104,7 +106,8 @@ function EmployeeList() {
               ) : null}
             </div>
             <div className="mt-1 text-[12px] text-[#6b778c]">
-              Showing <span className="font-semibold text-[#1f2a44]">{filtered.length}</span> of{" "}
+              Showing{" "}
+              <span className="font-semibold text-[#1f2a44]">{filtered.length}</span> of{" "}
               <span className="font-semibold text-[#1f2a44]">{employees.length}</span>
             </div>
           </div>
@@ -127,16 +130,19 @@ function EmployeeList() {
             <div className="divide-y divide-[#eef1f6]">
               {filtered.map(item => (
                 <div
-                  key={item.id}
+                  key={item.id || item.employeeEmail}
                   className="grid grid-cols-12 gap-3 px-4 py-3 hover:bg-[#f7faff] transition-colors"
                 >
                   <div className="col-span-6 md:col-span-5 min-w-0">
                     <div className="flex items-center gap-3 min-w-0">
                       <div className="h-10 w-10 overflow-hidden rounded-lg border border-[#e6eaf2] bg-white">
                         <img
-                          src={item.companyLogo}
-                          alt={item.companyName}
+                          src={item.profileImage || DEFAULT_PROFILE}
+                          alt={item.employeeName}
                           className="h-full w-full object-cover"
+                          onError={e => {
+                            e.currentTarget.src = DEFAULT_PROFILE
+                          }}
                         />
                       </div>
                       <div className="min-w-0">

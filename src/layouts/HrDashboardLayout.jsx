@@ -7,11 +7,11 @@ function HrDashboardLayout() {
   const linkActive = "bg-[#eef5ff] text-[#0065ff]"
 
   return (
-    <div className="min-h-screen bg-[#f5f7fb] grid md:grid-cols-[260px_1fr]">
-      <aside className="border-r border-[#e6eaf2] bg-white">
+    <div className="min-h-screen bg-[var(--bg-page)] grid md:grid-cols-[260px_1fr]">
+      <aside className="border-r border-[#e6eaf2] bg-[var(--bg-page)]">
         <div className="px-4 py-4 border-b border-[#eef1f6]">
-          <div className="text-2xl text-[#6b778c]">Dashboard</div>
-          <h2 className="mt-1 text-2xl font-semibold text-[#1f2a44]">HR</h2>
+          {/* <div className="text-2xl text-[#6b778c]">Dashboard</div> */}
+          <h2 className="mt-1 text-2xl font-semibold text-[var(--primary)]">HR Dashboard</h2>
         </div>
 
         <nav className="p-3 space-y-1">
@@ -117,7 +117,7 @@ function HrDashboardLayout() {
         </nav>
       </aside>
 
-      <main className="bg-[#f5f7fb] p-4 md:p-6">
+      <main className="bg-[var(--bg-page)] p-4 md:p-6">
         <Outlet />
       </main>
     </div>

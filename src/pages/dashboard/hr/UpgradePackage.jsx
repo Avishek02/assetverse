@@ -51,14 +51,14 @@ function UpgradePackage() {
       <div className="max-w-6xl space-y-6">
         <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
           <div>
-            <div className="text-xs text-[#6b778c]">Billing</div>
-            <h1 className="mt-1 text-xl font-semibold text-[#1f2a44]">
+            {/* <div className="text-xs text-[#6b778c]">Billing</div> */}
+            <h1 className="mt-1 text-xl font-semibold text-[var(--primary)]">
               Upgrade Package
             </h1>
           </div>
           <div className="rounded-lg border border-[#e6eaf2] bg-white px-4 py-2 text-sm">
             Current Package:{" "}
-            <span className="font-semibold text-[#1f2a44]">
+            <span className="font-semibold text-[var(--primary)]">
               {currentPackageLabel}
             </span>
           </div>

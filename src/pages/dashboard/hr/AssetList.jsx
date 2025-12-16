@@ -17,8 +17,6 @@ import Loading from "../../../components/Loading"
 
 function AssetList() {
   const [assets, setAssets] = useState([])
-  const [page, setPage] = useState(1)
-  const [pages, setPages] = useState(1)
   const [search, setSearch] = useState("")
   const [assetTypeData, setAssetTypeData] = useState([])
   const [topRequestedData, setTopRequestedData] = useState([])
@@ -27,6 +25,9 @@ function AssetList() {
   const [assignEmployeeEmail, setAssignEmployeeEmail] = useState("")
   const [overview, setOverview] = useState({ activeAssets: 0, assigned: 0, returnable: 0 })
   const [loading, setLoading] = useState(true)
+
+  const [currentPage, setCurrentPage] = useState(1)
+  const rowsPerPage = 10
 
   const pieData = assetTypeData.map(item => ({
     name: item.type,
@@ -51,17 +52,16 @@ function AssetList() {
     "#f97316",
   ]
 
-  const refetchAll = (nextPage = page, nextSearch = search) => {
+  const refetchAll = (nextSearch = search) => {
     setLoading(true)
     return Promise.all([
-      apiClient.get("/api/assets", { params: { page: nextPage, limit: 10, search: nextSearch } }),
+      apiClient.get("/api/assets", { params: { page: 1, limit: 100000, search: nextSearch } }),
       apiClient.get("/api/analytics/asset-types"),
       apiClient.get("/api/analytics/top-requested-assets"),
       apiClient.get("/api/analytics/hr/overview"),
     ])
       .then(([assetsRes, typeRes, topRes, overviewRes]) => {
         setAssets(assetsRes.data.data)
-        setPages(assetsRes.data.pagination.pages)
         setAssetTypeData(typeRes.data)
         setTopRequestedData(topRes.data)
         setOverview(overviewRes.data)
@@ -71,8 +71,8 @@ function AssetList() {
   }
 
   useEffect(() => {
-    refetchAll(page, search)
-  }, [page])
+    refetchAll(search)
+  }, [])
 
   useEffect(() => {
     apiClient
@@ -105,9 +105,8 @@ function AssetList() {
 
   const handleSearch = e => {
     e.preventDefault()
-    const nextPage = 1
-    setPage(nextPage)
-    refetchAll(nextPage, search)
+    setCurrentPage(1)
+    refetchAll(search)
   }
 
   const handleDelete = id => {
@@ -122,17 +121,22 @@ function AssetList() {
 
   if (loading) return <Loading />
 
+  const indexOfLastRow = currentPage * rowsPerPage
+  const indexOfFirstRow = indexOfLastRow - rowsPerPage
+  const currentAssets = assets.slice(indexOfFirstRow, indexOfLastRow)
+  const totalPages = Math.max(1, Math.ceil(assets.length / rowsPerPage))
+
   return (
     <div className="bg-[#f5f7fb] -m-4 p-4 md:p-6 min-h-[calc(100vh-120px)]">
       <div className="mx-auto max-w-6xl space-y-6">
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div>
-            <div className="text-xs text-[#6b778c]">Assets</div>
+            {/* <div className="text-xs text-[#6b778c]">Assets</div> */}
             <div className="mt-1 flex items-center gap-3">
-              <h1 className="text-xl md:text-2xl font-semibold text-[#1f2a44]">Asset List</h1>
-              <span className="inline-flex items-center rounded-full border border-[#e6eaf2] bg-white px-2.5 py-1 text-xs font-semibold text-[#1f2a44]">
-                Page {page} of {pages}
-              </span>
+              <h1 className="text-xl md:text-2xl font-semibold text-[var(--primary)]">Asset List</h1>
+              {/* <span className="inline-flex items-center rounded-full border border-[#e6eaf2] bg-[var(--bg-active)] px-2.5 py-1 text-xs font-semibold text-[var(--primary)]">
+                Page {currentPage} of {totalPages}
+              </span> */}
             </div>
           </div>
 
@@ -240,7 +244,6 @@ function AssetList() {
                     activeBar={{ fill: "#E73385" }}
                   />
                 </BarChart>
-
               </ResponsiveContainer>
             </div>
           </div>
@@ -261,7 +264,7 @@ function AssetList() {
             <div className="px-4 py-10 text-center text-sm text-[#6b778c]">No assets found</div>
           ) : (
             <div className="divide-y divide-[#eef1f6]">
-              {assets.map(item => (
+              {currentAssets.map(item => (
                 <div
                   key={item._id}
                   className="grid grid-cols-12 gap-3 px-4 py-3 text-sm hover:bg-[#f7faff]"
@@ -311,23 +314,36 @@ function AssetList() {
           )}
         </div>
 
-        <div className="flex items-center justify-end gap-2">
+        <div className="mt-4 flex items-center justify-end gap-2">
           <button
-            className="rounded-lg border border-[#e6eaf2] bg-white px-3 py-2 text-sm font-semibold text-[#1f2a44] disabled:opacity-50"
-            disabled={page <= 1}
-            onClick={() => setPage(p => p - 1)}
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage(currentPage - 1)}
+            className="rounded-md border px-3 py-1 text-sm disabled:opacity-50"
           >
-            Previous
+            Prev
           </button>
 
-          <span className="rounded-lg border border-[#e6eaf2] bg-white px-3 py-2 text-sm font-semibold text-[#1f2a44]">
-            Page {page} of {pages}
-          </span>
+          {Array.from({ length: totalPages }).map((_, i) => {
+            const page = i + 1
+            return (
+              <button
+                key={page}
+                onClick={() => setCurrentPage(page)}
+                className={`rounded-md px-3 py-1 text-sm font-semibold ${
+                  currentPage === page
+                    ? "bg-[#0065ff] text-white"
+                    : "border border-[#e6eaf2] text-[#1f2a44]"
+                }`}
+              >
+                {page}
+              </button>
+            )
+          })}
 
           <button
-            className="rounded-lg border border-[#e6eaf2] bg-white px-3 py-2 text-sm font-semibold text-[#1f2a44] disabled:opacity-50"
-            disabled={page >= pages}
-            onClick={() => setPage(p => p + 1)}
+            disabled={currentPage === totalPages}
+            onClick={() => setCurrentPage(currentPage + 1)}
+            className="rounded-md bg-[#0065ff] px-3 py-1 text-sm text-white disabled:opacity-50"
           >
             Next
           </button>
