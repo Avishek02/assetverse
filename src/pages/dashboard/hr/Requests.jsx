@@ -224,7 +224,7 @@ function Requests() {
             <button
               disabled={currentPage === 1}
               onClick={() => setCurrentPage(currentPage - 1)}
-              className="rounded-md border px-3 py-1 text-sm disabled:opacity-50"
+              className="rounded-md border border-[var(--border)] px-3 py-1 text-sm disabled:opacity-50"
             >
               Prev
             </button>
