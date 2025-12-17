@@ -92,18 +92,18 @@ function MyAssets() {
   }
 
   const pagerBtn = isActive =>
-    `min-w-[40px] h-9 rounded-md border px-3 text-sm font-semibold ${
-      isActive
-        ? "bg-[#1d4ed8] border-[#1d4ed8] text-white"
-        : "bg-white border-[#e6eaf2] text-[#111827] hover:bg-[#f7faff]"
+    `rounded-md border px-3 py-1 text-sm font-semibold ${isActive
+      ? "bg-[var(--primary)] text-white"
+      : "bg-white border-[#e6eaf2] text-[#111827] hover:bg-[#f7faff]"
     }`
 
   const disabledBtn =
-    "min-w-[64px] h-9 rounded-md px-4 text-sm font-semibold text-white cursor-not-allowed bg-[var(--primary)] opacity-50"
+    " rounded-md px-3 py-1 text-sm font-semibold text-white cursor-not-allowed bg-[var(--primary)] opacity-50"
 
+  const prevBtn = " rounded-md border border-[var(--border)] bg-white px-3 py-1 text-sm font-semibold hover:bg-[#f7faff]"
 
   const nextBtn =
-  "rounded-md bg-[var(--primary)] px-3 py-1 text-sm font-semibold text-white hover:bg-[var(--primary-hover)]"
+    "rounded-md bg-[var(--primary)] px-3 py-1 text-sm font-semibold text-white hover:bg-[var(--primary-hover)]"
 
   return (
     <div className="bg-[#f5f7fb] p-4 md:p-6">
@@ -197,7 +197,7 @@ function MyAssets() {
 
         <div className="flex items-center justify-end gap-2">
           <button
-            className={safePage === 1 ? disabledBtn : "min-w-[64px] h-9 rounded-md border border-[#e6eaf2] bg-white px-4 text-sm font-semibold hover:bg-[#f7faff]"}
+            className={safePage === 1 ? disabledBtn : prevBtn}
             onClick={() => setPage(p => Math.max(1, p - 1))}
             disabled={safePage === 1}
           >
