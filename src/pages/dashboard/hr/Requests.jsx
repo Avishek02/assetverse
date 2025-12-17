@@ -248,7 +248,7 @@ function Requests() {
             <button
               disabled={currentPage === totalPages}
               onClick={() => setCurrentPage(currentPage + 1)}
-              className="rounded-md bg-[#0065ff] px-3 py-1 text-sm text-white disabled:opacity-50"
+              className="rounded-md bg-[var(--primary)] px-3 py-1 text-sm text-white disabled:opacity-50"
             >
               Next
             </button>
