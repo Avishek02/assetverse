@@ -117,7 +117,7 @@ function HrDashboardLayout() {
         </nav>
       </aside>
 
-      <main className="bg-[var(--bg-page)] p-4 md:p-6">
+      <main className="bg-[var(--bg-page)] p-4 md:p-6 min-w-0">
         <Outlet />
       </main>
     </div>

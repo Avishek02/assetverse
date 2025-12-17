@@ -10,10 +10,10 @@ function NotFound() {
           It might have been moved or deleted.
         </p>
         <div className="flex gap-3 justify-center">
-          <Link to="/" className="btn btn-primary">
+          <Link to="/" className="btn btn-primary bg-[var(--primary)] hover:bg-[var(--primary-hover)] border-none rounded-xl text-white">
             Go Home
           </Link>
-          <Link to="/login" className="btn btn-outline">
+          <Link to="/login" className="btn btn-outline rounded-xl border-[var(--border)] text-[var(--primary)] hover:bg-[var(--bg-active)] font-bold text-base">
             Login
           </Link>
         </div>

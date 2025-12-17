@@ -160,7 +160,7 @@ function EmployeeList() {
                   </div>
 
                   <div className="hidden md:block md:col-span-3 min-w-0">
-                    <div className="truncate text-sm font-semibold text-[#1f2a44]">
+                    <div className="mx-2 truncate text-sm font-semibold text-[#1f2a44]">
                       {item.companyName}
                     </div>
                     <div className="mt-1 inline-flex items-center rounded-md bg-[#eef5ff] px-2 py-1 text-[11px] font-semibold text-[#0065ff]">
@@ -194,3 +194,5 @@ function EmployeeList() {
 }
 
 export default EmployeeList
+
+
